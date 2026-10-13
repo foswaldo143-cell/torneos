@@ -1,53 +1,60 @@
 # Plan de acción
 
-*Versión preliminar · 13/10/2026 · Se ajustará con las respuestas de definición*
+*Actualizado 13/10/2026 con las definiciones de `05-definiciones.md`*
 
 **Responsables:** 🔵 Oswaldo (cuentas, pagos, banco, legal) · 🟣 Marcos (operativo, redes, diseño, moderación) · ⚪ Ambos
 
-Esta lista es la misma que aparece en la pestaña **Plan** de la página. No gastar en publicidad hasta cerrar las fases 0 y 1.
+Es la misma lista de la pestaña **Plan** de la página.
 
-## F0 · Validar antes de invertir (semana 1)
+## F0 · Validar antes de invertir (Semana 1)
 
 - [ ] 🔵 Responder en el chat las preguntas de definición
-- [ ] 🔵 Enviar la solicitud de licencia de torneo a Activision (CoD Mobile)
-- [ ] 🔵 Consultar con un abogado el tema de juegos de envite y azar
-- [ ] 🟣 Probar sala privada BR: ¿se puede desactivar redespliegue y revivir?
+- [ ] ⚪ Decidir entre Telegram y Discord
+- [ ] ⚪ Decidir la tabla de premios por escalón (25 / 50 / 75 / 100) — Con los premios actuales, 25 jugadores dan pérdida
+- [ ] 🟣 Probar sala privada BR clásica: una sola vida, sin redespliegue — Evitar modos tipo Alcatraz
 - [ ] 🟣 Probar si el moderador ve la tabla final de kills y posiciones
-- [ ] 🟣 Probar si el moderador sigue viendo la partida después de morir
+- [ ] 🟣 Probar si el moderador sigue viendo la partida después de morir — Si no, hará falta un segundo espectador
+- [ ] 🟣 Probar qué captura de kills puede enviar cada jugador al terminar
 - [ ] 🟣 Medir cuánto dura una partida completa
 - [ ] ⚪ Hacer la lista de jugadores conocidos para la primera semana
 
-## F1 · Fundaciones (semanas 2–3)
+## F1 · Fundaciones (Semanas 2–3)
 
-- [ ] 🟣 Definir nombre de la marca (sin usar "Call of Duty")
+- [ ] 🟣 Definir identidad: arquetipo, nombre y tono irreverente (sin usar "Call of Duty")
 - [ ] 🟣 Diseñar logo e identidad visual
-- [ ] ⚪ Escribir el reglamento (cupo mínimo, desempates, desconexiones, trampas, edad, moderador fuera del top 3)
-- [ ] 🔵 Decidir moneda de entrada y premios (Bs fijos o atados al BCV)
-- [ ] 🔵 Abrir cuenta bancaria separada solo para los torneos
-- [ ] 🔵 Averiguar costos y tiempos de una firma personal
-- [ ] 🔵 Elegir métodos de cobro y pago (máximo 2 al inicio)
+- [ ] ⚪ Escribir el reglamento — Cupo mínimo 25, top 3 = últimos en pie sin contar al moderador, desconexiones, baneos, mayores de 18
+- [ ] ⚪ Definir la regla de desconexión (internet o luz)
+- [ ] 🔵 Preparar la cuenta que no estás usando para el piloto — Pago móvil + Binance
 - [ ] 🔵 Crear la hoja de control de inscritos, kills y pagos
-- [ ] 🔵 Separar el fondo de reserva para premios de las primeras noches
-- [ ] 🟣 Elegir plataforma y crear el grupo de la comunidad
-- [ ] 🟣 Definir moderador suplente y entrenarlo
+- [ ] 🔵 Definir el reparto: fondo de premios y reinversión, y % entre socios
+- [ ] 🟣 Crear el grupo de la comunidad en la plataforma elegida
+- [ ] 🟣 Crear el clan en CoD Mobile para jugadores verificados
+- [ ] ⚪ Definir el flujo de inscripción: cédula, usuario de Activision y captura de pago
+- [ ] ⚪ Turnos de moderador entre Oswaldo y Marcos
 
-## F2 · Piloto cerrado (semanas 4–5)
+## F2 · Piloto cerrado (Semanas 4–5)
 
 - [ ] ⚪ Hacer de 3 a 5 torneos con conocidos
 - [ ] 🟣 Grabar la cacería del moderador en cada piloto
 - [ ] 🔵 Registrar resultados: inscritos, kills pagadas, ganancia, tiempo de pago
+- [ ] 🔵 Medir cuántas horas toma cada torneo de punta a punta
 - [ ] ⚪ Ajustar reglas y montos con los datos reales
 
-## F3 · Lanzamiento público (semana 6 en adelante)
+## F3 · Lanzamiento nacional (Semana 6 en adelante)
 
 - [ ] 🟣 Crear cuentas de Instagram y TikTok
 - [ ] 🟣 Publicar de 3 a 5 clips por semana
 - [ ] 🟣 Publicar la tabla final después de cada torneo
-- [ ] ⚪ Lanzar el programa de referidos
-- [ ] 🔵 Definir presupuesto de publicidad pagada
+- [ ] ⚪ Lanzar referidos: código = cupo gratis en el próximo torneo
+- [ ] 🔵 Arrancar publicidad pagada nacional ($150–200 al mes)
+- [ ] 🔵 Registrar emprendimiento, sacar RIF y abrir cuenta en Banco de Venezuela
+- [ ] 🔵 Evaluar la licencia de Activision — 2 semanas de anticipación por torneo y premios fijos
 
-## F4 · Herramientas y escala (cuando el piloto sea rentable)
+## F4 · Herramientas y escala (Mes 3 en adelante)
 
-- [ ] ⚪ Formulario o bot de inscripción
+- [ ] ⚪ Bot o portal de inscripción con aprobación de pagos
 - [ ] 🔵 App web de control de pagos y reportes
-- [ ] ⚪ Evaluar un segundo torneo diario u otros juegos
+- [ ] ⚪ Agregar torneos de dúos y escuadras (fines de semana)
+- [ ] ⚪ Torneos temáticos gratis para la comunidad (solo escopetas, francotirador…)
+- [ ] 🔵 Expansión internacional con cobros y pagos por Binance (mes 3–5)
+- [ ] ⚪ Evaluar paquetes de entradas y venta de CP

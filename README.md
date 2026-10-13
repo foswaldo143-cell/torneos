@@ -16,6 +16,7 @@ Comunidad de torneos pagos de **Call of Duty Mobile** (Battle Royale en sala pri
 | `docs/02-numeros-y-rentabilidad.md` | Cálculos base: margen por torneo, punto de equilibrio, sensibilidad. |
 | `docs/03-plan-de-accion.md` | Lista de tareas por fases, con casillas para ir marcando. |
 | `docs/04-bitacora-de-decisiones.md` | Registro de cada decisión tomada, con fecha y motivo. |
+| `docs/05-definiciones.md` | Todas las respuestas de definición del negocio. |
 
 ## Cómo usar la página
 

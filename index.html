@@ -265,12 +265,12 @@ details.settings[open] summary::after{transform:rotate(45deg)}
     <div class="card month">
       <div class="card-h" style="margin-bottom:0"><h2>Proyección del mes</h2></div>
       <div class="month-res"><span class="usd num" id="mUsd">$0</span><span class="bs num" id="mBs">Bs 0</span></div>
-      <div class="games-line"><span>Partidas al mes</span><b class="num" id="gOut">30</b></div>
-      <input type="range" id="gRange" min="1" max="60" step="1" value="30" aria-label="Partidas al mes">
+      <div class="games-line"><span>Partidas al mes</span><b class="num" id="gOut">32</b></div>
+      <input type="range" id="gRange" min="1" max="60" step="1" value="32" aria-label="Partidas al mes">
       <div class="presets" id="presets">
         <button type="button" class="preset" data-g="8">Fines de semana · 8</button>
         <button type="button" class="preset" data-g="20">Días hábiles · 20</button>
-        <button type="button" class="preset" data-g="30">1 diaria · 30</button>
+        <button type="button" class="preset" data-g="32">Tu horario · 32</button>
         <button type="button" class="preset" data-g="60">2 diarias · 60</button>
       </div>
       <p class="chart-note" id="mNote">—</p>
@@ -335,7 +335,7 @@ details.settings[open] summary::after{transform:rotate(45deg)}
 (function(){
 "use strict";
 const KEY="torneos-codm-panel-v2";
-const DEF={n:49,games:30,entry:3000,kill:2000,p1:10,p2:7,p3:5,bounty:10,mod:0,rate:876.80,dies:true};
+const DEF={n:50,games:32,entry:3000,kill:2000,p1:10,p2:7,p3:5,bounty:10,mod:0,rate:876.80,dies:true};
 let st={calc:Object.assign({},DEF),done:{},view:"calc",who:"all",open:{}};
 try{const raw=localStorage.getItem(KEY);if(raw){const p=JSON.parse(raw);if(p&&typeof p==="object"){st=Object.assign(st,p);st.calc=Object.assign({},DEF,p.calc||{});}}}catch(e){}
 let sT;function save(){clearTimeout(sT);sT=setTimeout(()=>{try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}},200);}
@@ -439,44 +439,51 @@ $("settings").addEventListener("toggle",e=>{st.open.settings=e.target.open;save(
 const PH=[
  {id:"f0",code:"F0",title:"Validar antes de invertir",sub:"Semana 1",t:[
   {id:"t01",w:"os",x:"Responder en el chat las preguntas de definición"},
-  {id:"t02",w:"os",x:"Enviar la solicitud de licencia de torneo a Activision (CoD Mobile)",d:"Exigen aprobación previa y mayores de 18"},
-  {id:"t03",w:"os",x:"Consultar con un abogado el tema de juegos de envite y azar"},
-  {id:"t04",w:"ma",x:"Probar sala privada BR: ¿se puede desactivar redespliegue y revivir?"},
+  {id:"t09",w:"am",x:"Decidir entre Telegram y Discord"},
+  {id:"t10",w:"am",x:"Decidir la tabla de premios por escalón (25 / 50 / 75 / 100)",d:"Con los premios actuales, 25 jugadores dan pérdida"},
+  {id:"t04",w:"ma",x:"Probar sala privada BR clásica: una sola vida, sin redespliegue",d:"Evitar modos tipo Alcatraz"},
   {id:"t05",w:"ma",x:"Probar si el moderador ve la tabla final de kills y posiciones"},
   {id:"t06",w:"ma",x:"Probar si el moderador sigue viendo la partida después de morir",d:"Si no, hará falta un segundo espectador"},
+  {id:"t22",w:"ma",x:"Probar qué captura de kills puede enviar cada jugador al terminar"},
   {id:"t07",w:"ma",x:"Medir cuánto dura una partida completa"},
   {id:"t08",w:"am",x:"Hacer la lista de jugadores conocidos para la primera semana"}
  ]},
  {id:"f1",code:"F1",title:"Fundaciones",sub:"Semanas 2–3",t:[
-  {id:"t11",w:"ma",x:"Definir nombre de la marca (sin usar “Call of Duty”)"},
+  {id:"t11",w:"ma",x:"Definir identidad: arquetipo, nombre y tono irreverente (sin usar “Call of Duty”)"},
   {id:"t12",w:"ma",x:"Diseñar logo e identidad visual"},
-  {id:"t13",w:"am",x:"Escribir el reglamento",d:"Cupo mínimo, desempates, desconexiones, trampas, edad, moderador fuera del top 3"},
-  {id:"t14",w:"os",x:"Decidir moneda de entrada y premios (Bs fijos o atados al BCV)"},
-  {id:"t15",w:"os",x:"Abrir cuenta bancaria separada solo para los torneos"},
-  {id:"t16",w:"os",x:"Averiguar costos y tiempos de una firma personal"},
-  {id:"t17",w:"os",x:"Elegir métodos de cobro y pago (máximo 2 al inicio)"},
+  {id:"t13",w:"am",x:"Escribir el reglamento",d:"Cupo mínimo 25, top 3 = últimos en pie sin contar al moderador, desconexiones, baneos, mayores de 18"},
+  {id:"t23",w:"am",x:"Definir la regla de desconexión (internet o luz)"},
+  {id:"t15",w:"os",x:"Preparar la cuenta que no estás usando para el piloto",d:"Pago móvil + Binance"},
   {id:"t18",w:"os",x:"Crear la hoja de control de inscritos, kills y pagos"},
-  {id:"t19",w:"os",x:"Separar el fondo de reserva para premios de las primeras noches"},
-  {id:"t20",w:"ma",x:"Elegir plataforma y crear el grupo de la comunidad"},
-  {id:"t21",w:"ma",x:"Definir moderador suplente y entrenarlo"}
+  {id:"t24",w:"os",x:"Definir el reparto: fondo de premios y reinversión, y % entre socios"},
+  {id:"t20",w:"ma",x:"Crear el grupo de la comunidad en la plataforma elegida"},
+  {id:"t25",w:"ma",x:"Crear el clan en CoD Mobile para jugadores verificados"},
+  {id:"t26",w:"am",x:"Definir el flujo de inscripción: cédula, usuario de Activision y captura de pago"},
+  {id:"t21",w:"am",x:"Turnos de moderador entre Oswaldo y Marcos"}
  ]},
  {id:"f2",code:"F2",title:"Piloto cerrado",sub:"Semanas 4–5",t:[
   {id:"t31",w:"am",x:"Hacer de 3 a 5 torneos con conocidos"},
   {id:"t32",w:"ma",x:"Grabar la cacería del moderador en cada piloto"},
   {id:"t33",w:"os",x:"Registrar resultados: inscritos, kills pagadas, ganancia, tiempo de pago"},
+  {id:"t27",w:"os",x:"Medir cuántas horas toma cada torneo de punta a punta"},
   {id:"t34",w:"am",x:"Ajustar reglas y montos con los datos reales"}
  ]},
- {id:"f3",code:"F3",title:"Lanzamiento público",sub:"Semana 6 en adelante",t:[
+ {id:"f3",code:"F3",title:"Lanzamiento nacional",sub:"Semana 6 en adelante",t:[
   {id:"t41",w:"ma",x:"Crear cuentas de Instagram y TikTok"},
   {id:"t42",w:"ma",x:"Publicar de 3 a 5 clips por semana"},
   {id:"t43",w:"ma",x:"Publicar la tabla final después de cada torneo"},
-  {id:"t44",w:"am",x:"Lanzar el programa de referidos"},
-  {id:"t45",w:"os",x:"Definir presupuesto de publicidad pagada"}
+  {id:"t44",w:"am",x:"Lanzar referidos: código = cupo gratis en el próximo torneo"},
+  {id:"t45",w:"os",x:"Arrancar publicidad pagada nacional ($150–200 al mes)"},
+  {id:"t46",w:"os",x:"Registrar emprendimiento, sacar RIF y abrir cuenta en Banco de Venezuela"},
+  {id:"t02",w:"os",x:"Evaluar la licencia de Activision",d:"2 semanas de anticipación por torneo y premios fijos"}
  ]},
- {id:"f4",code:"F4",title:"Herramientas y escala",sub:"Cuando el piloto sea rentable",t:[
-  {id:"t51",w:"am",x:"Formulario o bot de inscripción"},
+ {id:"f4",code:"F4",title:"Herramientas y escala",sub:"Mes 3 en adelante",t:[
+  {id:"t51",w:"am",x:"Bot o portal de inscripción con aprobación de pagos"},
   {id:"t52",w:"os",x:"App web de control de pagos y reportes"},
-  {id:"t53",w:"am",x:"Evaluar un segundo torneo diario u otros juegos"}
+  {id:"t53",w:"am",x:"Agregar torneos de dúos y escuadras (fines de semana)"},
+  {id:"t54",w:"am",x:"Torneos temáticos gratis para la comunidad (solo escopetas, francotirador…)"},
+  {id:"t55",w:"os",x:"Expansión internacional con cobros y pagos por Binance (mes 3–5)"},
+  {id:"t56",w:"am",x:"Evaluar paquetes de entradas y venta de CP"}
  ]}
 ];
 const WN={os:"Oswaldo",ma:"Marcos",am:"Ambos"};
