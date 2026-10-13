@@ -17,6 +17,8 @@ Comunidad de torneos pagos de **Call of Duty Mobile** (Battle Royale en sala pri
 | `docs/03-plan-de-accion.md` | Lista de tareas por fases, con casillas para ir marcando. |
 | `docs/04-bitacora-de-decisiones.md` | Registro de cada decisión tomada, con fecha y motivo. |
 | `docs/05-definiciones.md` | Todas las respuestas de definición del negocio. |
+| `docs/06-portal.md` | Especificación del portal de jugadores (registro, inscripción, cupos, referidos). |
+| `docs/07-ideas-futuras.md` | Ideas registradas para más adelante. |
 
 ## Cómo usar la página
 

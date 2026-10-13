@@ -1,55 +1,60 @@
 # Números y rentabilidad
 
-*Cálculo base al 13/10/2026 · Tasa BCV: Bs 876,80 por USD*
+*Cálculo al 13/10/2026 · Tasa BCV: Bs 876,80 por USD*
 
-## Supuesto principal (peor caso para la caja)
+## Supuesto (peor caso para la caja)
 
-Queda **un solo jugador en pie** y todos los demás mueren por kill de otro jugador. Con *n* jugadores pagos se pagan **n − 1 kills**. El moderador entra aparte, no paga entrada y se asume que lo eliminan (se paga el bono).
+Queda **un solo jugador en pie** y todos los demás mueren por kill de otro jugador: con *n* jugadores se pagan **n − 1 kills**. El moderador no paga entrada y se asume que lo eliminan (se paga el bono). Por eso no hace falta un tope de kills: el total nunca pasa de n − 1, sin importar quién las haga.
 
-En la práctica algunas muertes son por zona o caídas, así que la ganancia real será un poco mayor.
+## Montos
+
+- Entrada: **Bs 3.000** · Pago por kill: **Bs 2.000** (fijos en bolívares).
+- Bono por eliminar al moderador: **$10** (Bs 8.768).
+- Premios top 3 por escalón (se pagan en Bs a tasa BCV):
+
+| Inscritos | Multiplicador | 1.º | 2.º | 3.º |
+|---|---|---|---|---|
+| Menos de 50 | ×1 | $5 | $3 | $2 |
+| 50 a 74 | ×2 | $10 | $6 | $4 |
+| 75 a 99 | ×3 | $15 | $9 | $6 |
+| 100 (sala llena) | ×4 | $20 | $12 | $8 |
 
 ## Fórmula
 
 ```
-Ganancia = n × entrada − (n − 1) × pago por kill − (premios top 3 + bono moderador) × tasa BCV
+Ganancia = n × 3.000 − (n − 1) × 2.000 − (premios del escalón + bono) × tasa BCV
 ```
 
-Con los montos actuales: entrada Bs 3.000, kill Bs 2.000, premios $22 + bono $10 = $32 (Bs 28.058).
-
 - Cada jugador extra suma **Bs 1.000**.
-- Punto de equilibrio: **27 jugadores**.
+- Punto de equilibrio: **16 jugadores** (con bono de $9 bajaría a 15).
 
 ## Ganancia por partida
 
-| Jugadores | Entradas | Kills pagadas | Premios + bono | Ganancia | En USD |
-|---|---|---|---|---|---|
-| 20 | Bs 60.000 | Bs 38.000 | Bs 28.058 | Bs −6.058 | −$6,91 |
-| 27 | Bs 81.000 | Bs 52.000 | Bs 28.058 | Bs 942 | $1,07 |
-| 30 | Bs 90.000 | Bs 58.000 | Bs 28.058 | Bs 3.942 | $4,50 |
-| 49 | Bs 147.000 | Bs 96.000 | Bs 28.058 | Bs 22.942 | $26,17 |
-| 75 | Bs 225.000 | Bs 148.000 | Bs 28.058 | Bs 48.942 | $55,82 |
-| 99 | Bs 297.000 | Bs 196.000 | Bs 28.058 | Bs 72.942 | $83,19 |
+| Jugadores | Ganancia | En USD |
+|---|---|---|
+| 15 | Bs −536 | −$0,61 |
+| 16 | Bs 464 | $0,53 |
+| 25 | Bs 9.464 | $10,79 |
+| 49 | Bs 33.464 | $38,17 |
+| 50 | Bs 25.696 | $29,31 |
+| 75 | Bs 41.928 | $47,82 |
+| 99 | Bs 65.928 | $75,19 |
+| 100 | Bs 58.160 | $66,33 |
 
-## Proyección mensual (con 49 jugadores por partida)
+Ojo: al pasar a un escalón nuevo la ganancia baja un poco (49 deja más que 50). Es intencional: el premio más grande es el gancho para llenar la sala.
 
-| Partidas al mes | Ganancia aprox. |
+## Proyección mensual (32 partidas: lunes a jueves + sábado + domingo)
+
+| Jugadores por partida | Ganancia al mes |
 |---|---|
-| 8 (fines de semana) | $209 |
-| 20 (días hábiles) | $523 |
-| 30 (1 diaria) | $785 |
-| 60 (2 diarias) | $1.570 |
+| 25 | Bs 302.848 · ~$345 |
+| 50 | Bs 822.272 · ~$938 |
+| 100 | Bs 1.861.120 · ~$2.123 |
 
-Antes de publicidad, pago al moderador, comisiones bancarias y datos móviles.
+Antes de publicidad ($150–200 al mes), comisiones bancarias y datos.
 
-## Lo que más mueve el resultado
+## Cuidado con la inflación
 
-1. **Cupo:** por debajo de 27 jugadores se pierde.
-2. **Margen por jugador:** con Bs 1.000 es estrecho. Subir la entrada a Bs 3.500 o bajar el kill a Bs 1.800 cambia mucho el punto de equilibrio.
-3. **Tasa BCV:** los premios están en dólares; si la entrada queda fija en Bs y el dólar sube, la ganancia baja.
-4. **Pago al moderador:** cada $5 por partida sube el equilibrio en unos 5 jugadores.
-
-## Ojo con la licencia
-
-Si Activision aprueba el torneo con la condición de que la inscripción no financie premios, este modelo hay que rediseñarlo. Ver `01-analisis-y-riesgos.md`, riesgo 1.
+Los montos están fijos en bolívares, pero los premios se piensan en dólares. Revisar cada mes y subir entrada y kill de forma proporcional cuando el dólar suba mucho.
 
 La calculadora de la página permite cambiar todos estos valores.

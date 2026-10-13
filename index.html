@@ -75,6 +75,7 @@ button{cursor:pointer}
 .verdict{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;padding:6px 10px;border-radius:6px;margin-top:8px}
 .verdict.pos{background:var(--pos-soft);color:var(--pos)} .verdict.neg{background:var(--neg-soft);color:var(--neg)}
 .verdict i{width:8px;height:8px;border-radius:50%;background:currentColor}
+.tier-chip{margin-top:8px;font-family:var(--f-mono);font-size:12px;color:var(--accent);border:1px dashed var(--accent);border-radius:6px;padding:6px 10px;display:block}
 
 /* ---------- Stepper jugadores ---------- */
 .stepper{display:grid;grid-template-columns:56px 1fr 56px;gap:10px;align-items:center;margin:14px 0 6px}
@@ -242,6 +243,7 @@ details.settings[open] summary::after{transform:rotate(45deg)}
       <input type="range" id="nRange" min="2" max="99" step="1" value="49" aria-label="Jugadores que pagan">
       <div class="range-scale num"><span>2</span><span>50</span><span>99</span></div>
       <div class="verdict" id="verdict"><i></i><span id="verdictTxt">—</span></div>
+      <div class="tier-chip num" id="tierChip"></div>
     </div>
 
     <div class="card">
@@ -281,18 +283,19 @@ details.settings[open] summary::after{transform:rotate(45deg)}
       <div class="grid2">
         <div class="field"><label for="sEntry">Entrada (Bs)</label><input id="sEntry" type="number" inputmode="decimal" min="0" step="100"></div>
         <div class="field"><label for="sKill">Pago por kill (Bs)</label><input id="sKill" type="number" inputmode="decimal" min="0" step="100"></div>
-        <div class="field"><label for="sP1">1.er lugar ($)</label><input id="sP1" type="number" inputmode="decimal" min="0" step="1"></div>
-        <div class="field"><label for="sP2">2.º lugar ($)</label><input id="sP2" type="number" inputmode="decimal" min="0" step="1"></div>
-        <div class="field"><label for="sP3">3.er lugar ($)</label><input id="sP3" type="number" inputmode="decimal" min="0" step="1"></div>
+        <div class="field"><label for="sP1">1.er lugar base ($)</label><input id="sP1" type="number" inputmode="decimal" min="0" step="1"></div>
+        <div class="field"><label for="sP2">2.º lugar base ($)</label><input id="sP2" type="number" inputmode="decimal" min="0" step="1"></div>
+        <div class="field"><label for="sP3">3.er lugar base ($)</label><input id="sP3" type="number" inputmode="decimal" min="0" step="1"></div>
         <div class="field"><label for="sBounty">Bono moderador ($)</label><input id="sBounty" type="number" inputmode="decimal" min="0" step="1"></div>
         <div class="field"><label for="sMod">Pago al moderador ($)</label><input id="sMod" type="number" inputmode="decimal" min="0" step="1"></div>
         <div class="field"><label for="sRate">Tasa BCV (Bs/$)</label><input id="sRate" type="number" inputmode="decimal" min="0" step="0.01"></div>
+        <label class="switch" for="sTiers"><span>Premios por escalón<small>×2 desde 50, ×3 desde 75, ×4 con 100 jugadores</small></span><input id="sTiers" type="checkbox" role="switch"></label>
         <label class="switch" for="sDies"><span>Eliminan al moderador<small>Si lo apagas, no se paga el bono</small></span><input id="sDies" type="checkbox" role="switch"></label>
       </div>
       <button type="button" class="reset-link" id="resetCalc">Volver a los valores iniciales</button>
     </details>
 
-    <p class="assume">Cálculo: queda un solo jugador en pie y todos los demás mueren por kill de otro jugador, así que se pagan <b>jugadores − 1</b> kills. El moderador entra aparte y no paga entrada. Es el peor caso para la caja; en la práctica algunas muertes son por zona o caídas y ganarías un poco más.</p>
+    <p class="assume">Premios: los montos base se multiplican según cuántos se inscriban, así el premio crece cuando la sala se llena. Cálculo: queda un solo jugador en pie y todos los demás mueren por kill de otro jugador, así que se pagan <b>jugadores − 1</b> kills. El moderador entra aparte y no paga entrada. Es el peor caso para la caja; en la práctica algunas muertes son por zona o caídas y ganarías un poco más.</p>
   </section>
 
   <!-- ================= PLAN ================= -->
@@ -334,8 +337,8 @@ details.settings[open] summary::after{transform:rotate(45deg)}
 <script>
 (function(){
 "use strict";
-const KEY="torneos-codm-panel-v2";
-const DEF={n:50,games:32,entry:3000,kill:2000,p1:10,p2:7,p3:5,bounty:10,mod:0,rate:876.80,dies:true};
+const KEY="torneos-codm-panel-v3";
+const DEF={n:50,games:32,entry:3000,kill:2000,p1:5,p2:3,p3:2,bounty:10,mod:0,rate:876.80,dies:true,tiers:true};
 let st={calc:Object.assign({},DEF),done:{},view:"calc",who:"all",open:{}};
 try{const raw=localStorage.getItem(KEY);if(raw){const p=JSON.parse(raw);if(p&&typeof p==="object"){st=Object.assign(st,p);st.calc=Object.assign({},DEF,p.calc||{});}}}catch(e){}
 let sT;function save(){clearTimeout(sT);sT=setTimeout(()=>{try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}},200);}
@@ -346,8 +349,11 @@ const usd=(v,d)=>{const a=Math.abs(v);const s=a.toLocaleString("es-VE",{minimumF
 const usd0=v=>usd(v,Math.abs(v)>=1000?0:2);
 
 /* ---------- Cálculo ---------- */
-function fixedUsd(){return (+c.p1||0)+(+c.p2||0)+(+c.p3||0)+(c.dies?(+c.bounty||0):0)+(+c.mod||0);}
-function profitBs(n){const k=Math.max(0,n-1);return n*(+c.entry||0)-k*(+c.kill||0)-fixedUsd()*(+c.rate||0);}
+function mult(n){if(!c.tiers)return 1;return n>=100?4:n>=75?3:n>=50?2:1;}
+function topUsd(n){return ((+c.p1||0)+(+c.p2||0)+(+c.p3||0))*mult(n);}
+function fixedUsd(n){return topUsd(n)+(c.dies?(+c.bounty||0):0)+(+c.mod||0);}
+function profitBs(n){const k=Math.max(0,n-1);return n*(+c.entry||0)-k*(+c.kill||0)-fixedUsd(n)*(+c.rate||0);}
+const TIER_NAMES={1:"Escalón base · menos de 50",2:"Escalón 50 · premios ×2",3:"Escalón 75 · premios ×3",4:"Sala llena · premios ×4"};
 function breakEven(){for(let n=2;n<=100;n++){if(profitBs(n)>=0)return n;}return null;}
 
 function render(){
@@ -365,8 +371,9 @@ function render(){
   const k=Math.max(0,n-1);
   $("rEntryD").textContent=`${n} × ${bs(+c.entry||0)}`;$("rEntry").innerHTML=`${bs(n*(+c.entry||0))}<small>${usd(rate?n*(+c.entry||0)/rate:0)}</small>`;
   $("rKillD").textContent=`${k} mueren × ${bs(+c.kill||0)}`;$("rKill").innerHTML=`−${bs(k*(+c.kill||0))}<small>${usd(rate?k*(+c.kill||0)/rate:0)}</small>`;
-  const top=(+c.p1||0)+(+c.p2||0)+(+c.p3||0);
-  $("rTopD").textContent=`$${+c.p1||0} + $${+c.p2||0} + $${+c.p3||0}`;$("rTop").innerHTML=`−${bs(top*rate)}<small>${usd(top)}</small>`;
+  const m=mult(n),top=topUsd(n);
+  $("rTopD").textContent=`$${(+c.p1||0)*m} + $${(+c.p2||0)*m} + $${(+c.p3||0)*m}`+(c.tiers?` · ${TIER_NAMES[m]}`:"");
+  const tc=$("tierChip");tc.hidden=!c.tiers;tc.textContent=`${TIER_NAMES[m]} · top 3: $${(+c.p1||0)*m} / $${(+c.p2||0)*m} / $${(+c.p3||0)*m}`;$("rTop").innerHTML=`−${bs(top*rate)}<small>${usd(top)}</small>`;
   $("rowBounty").hidden=!c.dies;$("rBounty").innerHTML=`−${bs((+c.bounty||0)*rate)}<small>${usd(+c.bounty||0)}</small>`;
   $("rowMod").hidden=!(+c.mod>0);$("rMod").innerHTML=`−${bs((+c.mod||0)*rate)}<small>${usd(+c.mod||0)}</small>`;
   const rt=$("rTotal");rt.innerHTML=`${bs(P)}<small>${usd(Pu)}</small>`;rt.style.color=P<0?"var(--neg)":"var(--pos)";
@@ -377,7 +384,7 @@ function render(){
   $("mBs").textContent=bs(M);
   document.querySelectorAll(".preset").forEach(b=>b.setAttribute("aria-pressed",+b.dataset.g===g?"true":"false"));
   $("mNote").textContent=`${g} partida${g===1?"":"s"} de ${n} jugadores. Antes de publicidad, comisiones bancarias y datos móviles.`;
-  $("setSub").textContent=`Entrada ${bs(+c.entry||0)} · Kill ${bs(+c.kill||0)} · Premios ${usd(fixedUsd(),0)}`;
+  $("setSub").textContent=`Entrada ${bs(+c.entry||0)} · Kill ${bs(+c.kill||0)} · Premios base $${(+c.p1||0)}/$${(+c.p2||0)}/$${(+c.p3||0)}`;
   chart(be);
   save();
 }
@@ -428,9 +435,10 @@ $("nRange").addEventListener("input",e=>{c.n=clampN(+e.target.value);render();})
 $("gRange").addEventListener("input",e=>{c.games=+e.target.value;render();});
 document.querySelectorAll(".preset").forEach(b=>b.addEventListener("click",()=>{c.games=+b.dataset.g;render();}));
 const MAP={sEntry:"entry",sKill:"kill",sP1:"p1",sP2:"p2",sP3:"p3",sBounty:"bounty",sMod:"mod",sRate:"rate"};
-function fillSettings(){Object.entries(MAP).forEach(([id,k])=>{$(id).value=c[k];});$("sDies").checked=!!c.dies;}
+function fillSettings(){Object.entries(MAP).forEach(([id,k])=>{$(id).value=c[k];});$("sDies").checked=!!c.dies;$("sTiers").checked=!!c.tiers;}
 Object.entries(MAP).forEach(([id,k])=>$(id).addEventListener("input",e=>{const v=parseFloat(e.target.value);c[k]=isFinite(v)?v:0;render();}));
 $("sDies").addEventListener("change",e=>{c.dies=e.target.checked;render();});
+$("sTiers").addEventListener("change",e=>{c.tiers=e.target.checked;render();});
 $("resetCalc").addEventListener("click",()=>{Object.assign(c,DEF);fillSettings();render();toast("Valores iniciales restaurados");});
 if(st.open.settings)$("settings").open=true;
 $("settings").addEventListener("toggle",e=>{st.open.settings=e.target.open;save();});
@@ -439,8 +447,6 @@ $("settings").addEventListener("toggle",e=>{st.open.settings=e.target.open;save(
 const PH=[
  {id:"f0",code:"F0",title:"Validar antes de invertir",sub:"Semana 1",t:[
   {id:"t01",w:"os",x:"Responder en el chat las preguntas de definición"},
-  {id:"t09",w:"am",x:"Decidir entre Telegram y Discord"},
-  {id:"t10",w:"am",x:"Decidir la tabla de premios por escalón (25 / 50 / 75 / 100)",d:"Con los premios actuales, 25 jugadores dan pérdida"},
   {id:"t04",w:"ma",x:"Probar sala privada BR clásica: una sola vida, sin redespliegue",d:"Evitar modos tipo Alcatraz"},
   {id:"t05",w:"ma",x:"Probar si el moderador ve la tabla final de kills y posiciones"},
   {id:"t06",w:"ma",x:"Probar si el moderador sigue viendo la partida después de morir",d:"Si no, hará falta un segundo espectador"},
@@ -451,39 +457,36 @@ const PH=[
  {id:"f1",code:"F1",title:"Fundaciones",sub:"Semanas 2–3",t:[
   {id:"t11",w:"ma",x:"Definir identidad: arquetipo, nombre y tono irreverente (sin usar “Call of Duty”)"},
   {id:"t12",w:"ma",x:"Diseñar logo e identidad visual"},
-  {id:"t13",w:"am",x:"Escribir el reglamento",d:"Cupo mínimo 25, top 3 = últimos en pie sin contar al moderador, desconexiones, baneos, mayores de 18"},
-  {id:"t23",w:"am",x:"Definir la regla de desconexión (internet o luz)"},
-  {id:"t15",w:"os",x:"Preparar la cuenta que no estás usando para el piloto",d:"Pago móvil + Binance"},
-  {id:"t18",w:"os",x:"Crear la hoja de control de inscritos, kills y pagos"},
-  {id:"t24",w:"os",x:"Definir el reparto: fondo de premios y reinversión, y % entre socios"},
-  {id:"t20",w:"ma",x:"Crear el grupo de la comunidad en la plataforma elegida"},
+  {id:"t13",w:"am",x:"Escribir el reglamento",d:"Cupo mínimo, premios por escalón, top 3, desconexiones, baneos, mayores de 18"},
+  {id:"t20",w:"ma",x:"Crear grupo y canal de Telegram con reglas y bot anti-spam",d:"Bloquear contenido indebido"},
   {id:"t25",w:"ma",x:"Crear el clan en CoD Mobile para jugadores verificados"},
-  {id:"t26",w:"am",x:"Definir el flujo de inscripción: cédula, usuario de Activision y captura de pago"},
+  {id:"t15",w:"os",x:"Preparar la cuenta que no estás usando para el piloto",d:"Pago móvil + Binance"},
+  {id:"t24",w:"os",x:"Definir el reparto: fondo de premios y reinversión, y % entre socios"},
+  {id:"t28",w:"os",x:"Crear cuentas de Supabase y Vercel para el portal"},
+  {id:"t29",w:"am",x:"Portal v1: registro, verificación de cédula, inscripción con captura y aprobación",d:"Lo construye Claude"},
+  {id:"t30",w:"ma",x:"Darle la identidad visual al portal"},
   {id:"t21",w:"am",x:"Turnos de moderador entre Oswaldo y Marcos"}
  ]},
  {id:"f2",code:"F2",title:"Piloto cerrado",sub:"Semanas 4–5",t:[
-  {id:"t31",w:"am",x:"Hacer de 3 a 5 torneos con conocidos"},
+  {id:"t31",w:"am",x:"Hacer de 3 a 5 torneos con conocidos usando el portal"},
   {id:"t32",w:"ma",x:"Grabar la cacería del moderador en cada piloto"},
-  {id:"t33",w:"os",x:"Registrar resultados: inscritos, kills pagadas, ganancia, tiempo de pago"},
-  {id:"t27",w:"os",x:"Medir cuántas horas toma cada torneo de punta a punta"},
-  {id:"t34",w:"am",x:"Ajustar reglas y montos con los datos reales"}
+  {id:"t33",w:"os",x:"Revisar resultados: inscritos, kills pagadas, ganancia, tiempo de pago"},
+  {id:"t34",w:"am",x:"Ajustar reglas, montos y portal con los datos reales"}
  ]},
  {id:"f3",code:"F3",title:"Lanzamiento nacional",sub:"Semana 6 en adelante",t:[
   {id:"t41",w:"ma",x:"Crear cuentas de Instagram y TikTok"},
   {id:"t42",w:"ma",x:"Publicar de 3 a 5 clips por semana"},
   {id:"t43",w:"ma",x:"Publicar la tabla final después de cada torneo"},
-  {id:"t44",w:"am",x:"Lanzar referidos: código = cupo gratis en el próximo torneo"},
+  {id:"t44",w:"am",x:"Portal v2: cupos y referidos (código = cupo gratis)"},
   {id:"t45",w:"os",x:"Arrancar publicidad pagada nacional ($150–200 al mes)"},
-  {id:"t46",w:"os",x:"Registrar emprendimiento, sacar RIF y abrir cuenta en Banco de Venezuela"},
-  {id:"t02",w:"os",x:"Evaluar la licencia de Activision",d:"2 semanas de anticipación por torneo y premios fijos"}
+  {id:"t46",w:"os",x:"Registrar emprendimiento, sacar RIF y abrir cuenta en Banco de Venezuela"}
  ]},
- {id:"f4",code:"F4",title:"Herramientas y escala",sub:"Mes 3 en adelante",t:[
-  {id:"t51",w:"am",x:"Bot o portal de inscripción con aprobación de pagos"},
-  {id:"t52",w:"os",x:"App web de control de pagos y reportes"},
+ {id:"f4",code:"F4",title:"Escala",sub:"Mes 3 en adelante",t:[
   {id:"t53",w:"am",x:"Agregar torneos de dúos y escuadras (fines de semana)"},
   {id:"t54",w:"am",x:"Torneos temáticos gratis para la comunidad (solo escopetas, francotirador…)"},
   {id:"t55",w:"os",x:"Expansión internacional con cobros y pagos por Binance (mes 3–5)"},
-  {id:"t56",w:"am",x:"Evaluar paquetes de entradas y venta de CP"}
+  {id:"t56",w:"am",x:"Evaluar paquetes de entradas y venta de CP"},
+  {id:"t57",w:"am",x:"Torneos grandes con premio físico (ej. un teléfono) y clasificatorios en el portal"}
  ]}
 ];
 const WN={os:"Oswaldo",ma:"Marcos",am:"Ambos"};

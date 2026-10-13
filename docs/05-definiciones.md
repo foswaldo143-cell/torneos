@@ -4,7 +4,7 @@
 
 ## Equipo y meta
 
-- **Tiempo:** Oswaldo y Marcos, unas 2,5 a 3 horas por semana cada uno. Eso incluye jugar, cobrar y pagar.
+- **Tiempo:** entre 5 y 6 horas **por día** entre los dos. Eso incluye jugar, cobrar y pagar.
 - **Capital inicial:** hasta $500 entre los dos (lo más probable es que sea menos). Hay capacidad de poner más si hace falta.
 - **Reparto:** según lo que aporte cada uno, en dinero y en trabajo. Si se pone mitad y mitad, se trabaja y se reparte mitad y mitad.
   - Primero se aparta un fondo para premios y reinversión; lo que queda se reparte. ⏳ Porcentajes.
@@ -20,6 +20,7 @@
   - Sábado: en la noche.
   - Domingo: varias partidas.
   - Son unas 7 u 8 partidas por semana, entre 30 y 34 al mes.
+- **Premios por escalón:** top 3 base de $5 / $3 / $2, que se multiplica ×2 desde 50 jugadores, ×3 desde 75 y ×4 con 100. Bono del moderador: $10. Así el punto de equilibrio queda en ~15–16 jugadores.
 - **Cupo mínimo:** **25 jugadores**. Los escalones de referencia son 25, 50, 75 y 100. Con 27 jugadores se juega igual, sin redondear.
 - **Si no se llega a 25:** se devuelve el dinero o se pospone el torneo.
 - **Cupo máximo:** 100, el límite de la sala.
@@ -57,13 +58,13 @@
   - La idea es pasar a un portal o bot donde se inscriba y suba el pago, y el equipo lo apruebe.
 - **Cierre de inscripción:** cuando se llena la sala, o 1 hora antes de empezar.
 - **Pago de premios:** el mismo día, apenas termina la partida.
-- ⏳ **Desconexiones (internet o luz):** pendiente con Marcos.
-  - Idea de Oswaldo: si se va la luz, el jugador manda un video con fecha y hora como prueba.
-  - Si se cae el internet, que use datos.
+- **Desconexiones (internet o luz):** cada jugador es responsable de tener luz y conexión.
+  - Si se desconecta a mitad de la partida, se le pagan las kills que hizo y no hay reembolso.
+  - Si se desconecta al inicio sin haber jugado (nunca entró, o murió por la zona sin kills y sin que nadie lo matara), conserva su cupo para otra partida.
 
 ## Legal
 
-- **Licencia de Activision:** no se pide para arrancar. Se va a evaluar.
+- **Licencia de Activision:** se opera sin licencia. Va a ser algo local y pequeño; si crece mucho, se reevalúa.
 - **Mayores de 18:** el jugador manda foto de su cédula y su usuario de Activision. Ya verificado, se agrega al clan del juego.
 - **Sanciones:**
   - Hackers: baneo de por vida.
@@ -71,7 +72,8 @@
 
 ## Comunidad y marca
 
-- **Plataforma:** entre Telegram y Discord. Se quiere la que más se pueda automatizar. ⏳
+- **Plataforma:** **Telegram** para la comunidad, con reglas y bot para bloquear contenido indebido.
+- **Inscripción:** por el **portal web**, no por Telegram. Ver `06-portal.md`.
 - **Alcance:** todo Venezuela al inicio.
   - Expansión internacional entre el mes 3 y el 5, cobrando y pagando por Binance.
 - **Jugadores conocidos:** varios, pero el crecimiento va a depender de la publicidad.

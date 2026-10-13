@@ -24,11 +24,14 @@ Cada decisión importante va aquí, con fecha y motivo. Así los socios saben po
 | 13/10/2026 | Arrancar sin licencia de Activision; evaluarla después | Rapidez de arranque; se asume el riesgo | Oswaldo |
 | 13/10/2026 | Publicidad pagada de $150–200 al mes desde el lanzamiento | Masificar rápido | Oswaldo |
 | 13/10/2026 | Referidos: código = cupo gratis en el próximo torneo | Crecimiento barato | Oswaldo |
+| 13/10/2026 | Premios por escalón: base $5/$3/$2, ×2 desde 50, ×3 desde 75, ×4 con 100; bono moderador $10 | Equilibrio en ~16 jugadores y gancho para llenar la sala | Oswaldo |
+| 13/10/2026 | Telegram para la comunidad; inscripción por el portal web | Moderación de contenido y experiencia "top" desde el teléfono | Oswaldo |
+| 13/10/2026 | Desconexión a mitad de partida: se pagan las kills, sin reembolso; desconexión al inicio sin jugar: conserva el cupo | Regla clara y fácil de comprobar | Oswaldo |
+| 13/10/2026 | Operar sin licencia de Activision; reevaluar si crece mucho | Será algo local y pequeño | Oswaldo |
+| 13/10/2026 | Construir un portal propio con usuarios, cupos y referidos | Venderlo como producto top y ahorrar tiempo | Oswaldo |
 
 ## Decisiones pendientes
 
-- Telegram o Discord.
-- Tabla de premios por escalón (25 / 50 / 75 / 100).
-- Regla de desconexión.
 - Porcentajes del fondo y del reparto entre socios.
 - Nombre y marca.
+- Aprobar la tecnología del portal (Supabase + Vercel).
