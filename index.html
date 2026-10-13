@@ -193,8 +193,46 @@ details.settings[open] summary::after{transform:rotate(45deg)}
 .btn.armed{border-color:var(--neg);color:var(--neg)}
 #fallback{width:100%;min-height:160px;font-family:var(--f-mono);font-size:12px;background:var(--sunk);border:1px solid var(--line);border-radius:8px;padding:10px}
 
+/* ---------- Acuerdos ---------- */
+.rules-hero h2{font-family:var(--f-display);text-transform:uppercase;font-size:20px;margin:0;line-height:1.1}
+.rules-hero p{margin:6px 0 0;color:var(--muted);font-size:13.5px}
+.keys{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.keys div{background:var(--surface);padding:12px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.keys span{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.keys b{font-family:var(--f-display);font-size:19px;font-weight:700;line-height:1.15}
+.keys small{font-size:12px;color:var(--muted)}
+.rule{padding:0;overflow:hidden}
+.rule > summary{list-style:none;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;padding:14px 16px;cursor:pointer}
+.rule > summary::-webkit-details-marker{display:none}
+.rule > summary::after{content:"+";font-size:22px;color:var(--accent);font-weight:600;transition:transform .2s}
+.rule[open] > summary::after{transform:rotate(45deg)}
+.r-ico{width:34px;height:34px;border-radius:9px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center}
+.r-ico svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.8}
+.r-title{font-family:var(--f-display);font-weight:700;text-transform:uppercase;font-size:15px;letter-spacing:.02em;line-height:1.2}
+.r-title small{display:block;font-family:var(--f-body);text-transform:none;letter-spacing:0;font-weight:400;color:var(--muted);font-size:12.5px;margin-top:2px}
+.r-body{padding:2px 16px 16px;border-top:1px solid var(--line);font-size:14.5px}
+.r-body ul{margin:10px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:7px}
+.r-body li::marker{color:var(--accent)}
+.r-body b{font-weight:600}
+.r-body h4{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:16px 0 0;font-weight:500}
+.r-body p{margin:10px 0 0}
+.tbl-wrap{overflow-x:auto;margin-top:10px}
+.tbl{width:100%;border-collapse:collapse;font-size:13.5px;font-variant-numeric:tabular-nums}
+.tbl th{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:500;text-align:left;padding:6px 8px;border-bottom:1px solid var(--line)}
+.tbl td{padding:8px;border-bottom:1px dashed var(--line);white-space:nowrap}
+.tbl tr:last-child td{border-bottom:0}
+.tbl .hl{color:var(--accent);font-weight:600}
+.flow{list-style:none;padding:0!important;counter-reset:f}
+.flow li{counter-increment:f;display:grid;grid-template-columns:26px minmax(0,1fr);gap:10px;align-items:start}
+.flow li::before{content:counter(f);width:24px;height:24px;border-radius:50%;background:var(--fg);color:var(--bg);font-family:var(--f-mono);font-size:12px;display:grid;place-items:center;margin-top:1px}
+.callout{margin-top:12px;padding:10px 12px;border-radius:8px;font-size:13.5px}
+.callout.warn{background:var(--neg-soft);color:var(--neg)}
+.callout.ok{background:var(--pos-soft);color:var(--pos)}
+.pend{display:inline-block;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;background:var(--accent-soft);color:var(--accent);border-radius:4px;padding:1px 6px;margin-left:4px;vertical-align:1px}
+.updated{font-family:var(--f-mono);font-size:11.5px;color:var(--muted);text-align:center}
+
 /* ---------- Barra inferior ---------- */
-.nav{position:fixed;left:0;right:0;bottom:0;z-index:30;background:color-mix(in srgb,var(--surface) 94%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line);padding:6px 16px calc(6px + env(safe-area-inset-bottom,0px));display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.nav{position:fixed;left:0;right:0;bottom:0;z-index:30;background:color-mix(in srgb,var(--surface) 94%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line);padding:6px 16px calc(6px + env(safe-area-inset-bottom,0px));display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
 .nav button,.tabs-top button{border:0;background:transparent;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:52px;font-family:var(--f-display);font-weight:600;text-transform:uppercase;letter-spacing:.05em;font-size:12px;color:var(--muted)}
 .nav button svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8}
 .nav button[aria-selected="true"]{background:var(--accent-soft);color:var(--accent)}
@@ -206,11 +244,10 @@ details.settings[open] summary::after{transform:rotate(45deg)}
 
 /* ---------- Escritorio ---------- */
 @media (min-width:960px){
-  .app{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:28px;align-items:start;padding-block:26px 48px}
-  .view[hidden]{display:flex!important}
+  .app{max-width:760px;padding-block:26px 48px}
   .nav{display:none}
+  .tabs-top{display:flex}
   .toast{bottom:24px}
-  #planView{position:sticky;top:76px;max-height:calc(100vh - 96px);overflow:auto;padding-right:4px}
 }
 @media (max-width:380px){
   .roles{grid-template-columns:1fr}
@@ -224,6 +261,11 @@ details.settings[open] summary::after{transform:rotate(45deg)}
 <header class="top">
   <div class="top-in">
     <div class="brand"><i></i><span>Torneos CODM</span></div>
+    <div class="tabs-top" role="tablist" aria-label="Secciones">
+      <button type="button" role="tab" data-v="calc" aria-selected="true">Calculadora</button>
+      <button type="button" role="tab" data-v="plan" aria-selected="false">Plan</button>
+      <button type="button" role="tab" data-v="rules" aria-selected="false">Acuerdos</button>
+    </div>
     <span class="rate-pill num">BCV <b id="ratePill">876,80</b></span>
   </div>
 </header>
@@ -324,6 +366,168 @@ details.settings[open] summary::after{transform:rotate(45deg)}
     <textarea id="fallback" hidden readonly aria-label="Avance para copiar"></textarea>
     <p class="assume">Las marcas se guardan en este teléfono. Cuando avances, toca <b>Copiar avance</b> y pégalo en el chat con Claude para actualizar el plan de los dos.</p>
   </section>
+
+  <!-- ================= ACUERDOS ================= -->
+  <section class="view" id="rulesView" aria-label="Acuerdos" hidden>
+    <div class="rules-hero">
+      <h2>Acuerdos del negocio</h2>
+      <p>Lo que hemos decidido hasta ahora: cómo funciona, cuánto se cobra y se paga, y las reglas para los jugadores. Si algo no está aquí, todavía no está decidido.</p>
+    </div>
+
+    <div class="keys">
+      <div><span>Entrada</span><b class="num">Bs 3.000</b><small>Fija en bolívares</small></div>
+      <div><span>Pago por kill</span><b class="num">Bs 2.000</b><small>Sin tope</small></div>
+      <div><span>Horario</span><b>9–10 pm</b><small>Todos los días menos viernes</small></div>
+      <div><span>Cupo mínimo</span><b class="num">25</b><small>Máximo 100 · se gana desde 16</small></div>
+    </div>
+
+    <details class="card rule" id="r1" open>
+      <summary><span class="r-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></span><span class="r-title">Cómo funciona<small>La partida de principio a fin</small></span></summary>
+      <div class="r-body">
+        <ul class="flow">
+          <li><span>Se publica el torneo en Telegram con fecha, hora y escalón de premios.</span></li>
+          <li><span>El jugador se inscribe en el <b>portal</b> y sube la captura del pago. Antes tiene que estar verificado.</span></li>
+          <li><span>El equipo aprueba el pago. La inscripción cierra cuando se llena la sala o <b>1 hora antes</b>.</span></li>
+          <li><span>Se envía el ID de la sala privada solo a los aprobados.</span></li>
+          <li><span>Se juega <b>Battle Royale clásico, una sola vida</b>, en modo <b>solos</b>.</span></li>
+          <li><span>El moderador revisa la tabla final y se publica la captura en el grupo.</span></li>
+          <li><span>Cada jugador manda la captura de sus kills por privado y se le paga <b>esa misma noche</b>.</span></li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="card rule" id="r2">
+      <summary><span class="r-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span><span class="r-title">Formato y horario<small>Días, modo de juego y top 3</small></span></summary>
+      <div class="r-body">
+        <ul>
+          <li><b>Lunes a jueves:</b> 1 torneo entre 9 y 10 pm.</li>
+          <li><b>Viernes:</b> no hay torneo.</li>
+          <li><b>Sábado:</b> en la noche. <b>Domingo:</b> varias partidas.</li>
+          <li>Unas <b>32 partidas al mes</b>.</li>
+          <li>Se empieza con <b>solos</b>. Dúos y escuadras vendrán después, probablemente los fines de semana.</li>
+          <li>Mapa BR clásico, una sola vida. Nada de modos con reaparición, como Alcatraz.</li>
+          <li>Todas las armas, clases y vehículos están permitidos. Cada jugador elige primera o tercera persona.</li>
+          <li><b>Top 3:</b> los últimos tres en pie, sin contar al moderador.</li>
+          <li><b>Cupo:</b> mínimo 25, máximo 100. Con 27 se juega igual. Si no se llega a 25, se devuelve el dinero o se pospone.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="card rule" id="r3">
+      <summary><span class="r-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="6" width="20" height="13" rx="2"/><circle cx="12" cy="12.5" r="3"/><path d="M6 9.5h.01M18 15.5h.01"/></svg></span><span class="r-title">Dinero y premios<small>Lo que se cobra y lo que se paga</small></span></summary>
+      <div class="r-body">
+        <ul>
+          <li>Entrada <b>Bs 3.000</b> y <b>Bs 2.000 por kill</b>, fijos en bolívares. Si el dólar sube mucho, se suben los dos de forma proporcional.</li>
+          <li>No hay tope de kills. Igual nunca se pagan más de <b>jugadores − 1</b> kills en una partida.</li>
+          <li>El que elimina al moderador gana un bono de <b>$10</b>. No se acumula: si nadie lo mata, se pierde.</li>
+          <li>Todo se paga en bolívares por <b>pago móvil</b> a tasa BCV del día. Binance queda como segunda opción.</li>
+        </ul>
+        <h4>Premios top 3 por escalón</h4>
+        <div class="tbl-wrap"><table class="tbl">
+          <thead><tr><th>Inscritos</th><th>1.º</th><th>2.º</th><th>3.º</th></tr></thead>
+          <tbody>
+            <tr><td>Menos de 50</td><td>$5</td><td>$3</td><td>$2</td></tr>
+            <tr><td>50 a 74 · ×2</td><td>$10</td><td>$6</td><td>$4</td></tr>
+            <tr><td>75 a 99 · ×3</td><td>$15</td><td>$9</td><td>$6</td></tr>
+            <tr><td class="hl">100 · ×4</td><td class="hl">$20</td><td class="hl">$12</td><td class="hl">$8</td></tr>
+          </tbody>
+        </table></div>
+        <div class="callout ok">Con estos montos se gana desde <b>16 jugadores</b>. Con 50 jugadores y 32 partidas al mes son unos Bs 822.000 (~$938).</div>
+      </div>
+    </details>
+
+    <details class="card rule" id="r4">
+      <summary><span class="r-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/><path d="M17 4l3-2M7 4L4 2"/></svg></span><span class="r-title">El moderador<small>Árbitro y presa de cada partida</small></span></summary>
+      <div class="r-body">
+        <ul>
+          <li>Se turnan <b>Oswaldo y Marcos</b>. Más adelante podría sumarse un tercero como socio minoritario o con sueldo.</li>
+          <li>Entra a la partida, <b>no mata a nadie</b> y se esconde lo mejor que pueda.</li>
+          <li>Al final revisa la tabla: quién quedó en el top 3 y cuántas kills hizo cada jugador.</li>
+          <li>No paga entrada y no gana premios. Si queda entre los últimos, el top 3 se corre.</li>
+          <li>Si favorece a alguien o se deja matar a propósito, se le saca y se le sanciona.</li>
+          <li>Sus clips de la cacería sirven como contenido para redes.</li>
+        </ul>
+        <div class="callout warn">Por probar: si al morir sigue viendo la partida y la tabla final. Si no puede, hará falta un segundo espectador.</div>
+      </div>
+    </details>
+
+    <details class="card rule" id="r5">
+      <summary><span class="r-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M10 18h4M9 7h6M9 11h6"/></svg></span><span class="r-title">Inscripción y verificación<small>Portal, cédula y pagos</small></span></summary>
+      <div class="r-body">
+        <ul>
+          <li>Todo se hace en el <b>portal web</b> desde el teléfono. Telegram es solo para la comunidad.</li>
+          <li><b>Solo mayores de 18.</b> El jugador sube la foto de su cédula y su usuario de Activision. Ya verificado, se agrega al clan del juego.</li>
+          <li>La foto de la cédula se borra después de aprobar al jugador.</li>
+          <li>Para inscribirse a un torneo sube la captura del pago móvil o de Binance, con su referencia.</li>
+          <li><b>Referidos:</b> si un amigo entra con tu código y juega, tú ganas un <b>cupo gratis</b> para el próximo torneo.</li>
+          <li>En el portal cada jugador puede ver sus cupos y sus referidos.</li>
+        </ul>
+        <div class="callout warn">Mientras el portal no esté listo, la inscripción se hace a mano: captura por privado al moderador.</div>
+      </div>
+    </details>
+
+    <details class="card rule" id="r6">
+      <summary><span class="r-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/><path d="M9 12l2 2 4-4"/></svg></span><span class="r-title">Reglas para jugadores<small>Desconexiones y sanciones</small></span></summary>
+      <div class="r-body">
+        <h4>Desconexiones</h4>
+        <ul>
+          <li>Cada jugador es responsable de tener luz y conexión. Si se cae el internet, que use datos.</li>
+          <li>Si se desconecta <b>a mitad de la partida</b>, se le pagan las kills que hizo. No hay reembolso.</li>
+          <li>Si se desconecta <b>al inicio sin haber jugado</b> (nunca entró, o murió por la zona sin kills), conserva su cupo para otra partida.</li>
+        </ul>
+        <h4>Sanciones</h4>
+        <ul>
+          <li><b>Hackers:</b> baneo de por vida.</li>
+          <li><b>Jugadores que se ayudan en solos:</b> baneo temporal de 1 a 3 meses, según el caso.</li>
+          <li>Contenido indebido en el grupo: expulsión.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="card rule" id="r7">
+      <summary><span class="r-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><circle cx="17" cy="9" r="2.5"/><path d="M2.5 20c.8-3.5 3.3-5.5 6.5-5.5s5.7 2 6.5 5.5M15 14.6c2.6.1 4.6 1.9 5.3 5.4"/></svg></span><span class="r-title">Equipo y dinero interno<small>Quién hace qué y cómo se reparte</small></span></summary>
+      <div class="r-body">
+        <ul>
+          <li><b>Oswaldo:</b> cuentas, cobros, pagos, banco, legal y números.</li>
+          <li><b>Marcos:</b> operativo, redes, diseño, publicidad y moderación.</li>
+          <li>Los dos ayudan en todo, pero cada uno responde por su área. Entre los dos dedican unas 5–6 horas al día.</li>
+          <li>Capital inicial de hasta $500 entre los dos.</li>
+          <li><b>Reparto:</b> según lo que aporte cada uno, en dinero y en trabajo. Primero se aparta un fondo para premios y reinversión, y lo que queda se reparte. <span class="pend">% pendiente</span></li>
+          <li><b>Piloto:</b> con una cuenta que Oswaldo no está usando.</li>
+          <li><b>Después:</b> registrar un emprendimiento con RIF y abrir cuenta en el Banco de Venezuela.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="card rule" id="r8">
+      <summary><span class="r-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11v2a1 1 0 001 1h2l5 4V6L7 10H5a1 1 0 00-1 1z"/><path d="M16 9a4 4 0 010 6M19 6.5a8 8 0 010 11"/></svg></span><span class="r-title">Comunidad y crecimiento<small>Marca, redes y publicidad</small></span></summary>
+      <div class="r-body">
+        <ul>
+          <li><b>Telegram</b> para la comunidad, con reglas y bot anti-spam.</li>
+          <li><b>Estilo:</b> irreverente y juvenil. Marcos define el arquetipo, el nombre y el logo. <span class="pend">Pendiente</span></li>
+          <li>No se puede usar "Call of Duty" ni su logo en la marca.</li>
+          <li><b>Publicidad pagada:</b> $150–200 al mes desde el lanzamiento nacional.</li>
+          <li><b>Redes:</b> Instagram y TikTok, con 3 a 5 clips por semana y la tabla final de cada torneo.</li>
+          <li><b>Expansión internacional:</b> entre el mes 3 y el 5, con pagos por Binance.</li>
+          <li>Torneos temáticos gratis (solo escopetas, francotirador…) para hacer comunidad.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="card rule" id="r9">
+      <summary><span class="r-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9L2.4 18a2 2 0 001.7 3h15.8a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg></span><span class="r-title">Riesgos asumidos<small>Lo que sabemos y aceptamos</small></span></summary>
+      <div class="r-body">
+        <ul>
+          <li>Se opera <b>sin licencia de Activision</b>. Será algo local; si crece mucho, se reevalúa.</li>
+          <li>Hay que consultar con un abogado si la actividad podría considerarse juego de envite y azar.</li>
+          <li>Muchos cobros y pagos en una cuenta personal pueden causar un bloqueo. Por eso, después del piloto se abre una cuenta propia del negocio.</li>
+          <li>La confianza es todo: publicar siempre la tabla final y pagar la misma noche.</li>
+        </ul>
+      </div>
+    </details>
+
+    <p class="updated">Actualizado el 13/10/2026</p>
+  </section>
 </main>
 
 <nav class="nav" role="tablist" aria-label="Secciones">
@@ -331,6 +535,8 @@ details.settings[open] summary::after{transform:rotate(45deg)}
     <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 12h2M12 12h2M16 12h0M8 16h2M12 16h2M16 16h0"/></svg>Calculadora</button>
   <button type="button" role="tab" id="tabPlan" aria-controls="planView" aria-selected="false">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></svg>Plan</button>
+  <button type="button" role="tab" id="tabRules" aria-controls="rulesView" aria-selected="false">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4M9 12h7M9 16h7M9 8h3"/></svg>Acuerdos</button>
 </nav>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
@@ -542,15 +748,17 @@ cl.addEventListener("click",()=>{
 });
 
 /* ---------- Pestañas ---------- */
+const VIEWS={calc:["calcView","tabCalc"],plan:["planView","tabPlan"],rules:["rulesView","tabRules"]};
 function show(v){
-  st.view=v;const calc=v==="calc";
-  $("calcView").hidden=!calc;$("planView").hidden=calc;
-  $("tabCalc").setAttribute("aria-selected",calc);$("tabPlan").setAttribute("aria-selected",!calc);
+  if(!VIEWS[v])v="calc";st.view=v;
+  Object.entries(VIEWS).forEach(([k,[view,tab]])=>{$(view).hidden=k!==v;$(tab).setAttribute("aria-selected",k===v);});
+  document.querySelectorAll(".tabs-top button").forEach(b=>b.setAttribute("aria-selected",b.dataset.v===v));
   save();
 }
-$("tabCalc").addEventListener("click",()=>{show("calc");window.scrollTo({top:0});});
-$("tabPlan").addEventListener("click",()=>{show("plan");window.scrollTo({top:0});});
-if(location.hash==="#plan")st.view="plan";
+Object.entries(VIEWS).forEach(([k,[,tab]])=>$(tab).addEventListener("click",()=>{show(k);window.scrollTo({top:0});}));
+document.querySelectorAll(".tabs-top button").forEach(b=>b.addEventListener("click",()=>{show(b.dataset.v);window.scrollTo({top:0});}));
+document.querySelectorAll(".rule").forEach(d=>{if(st.open["r-"+d.id]!==undefined)d.open=st.open["r-"+d.id];d.addEventListener("toggle",()=>{st.open["r-"+d.id]=d.open;save();});});
+if(location.hash==="#plan")st.view="plan";if(location.hash==="#acuerdos")st.view="rules";
 
 fillSettings();render();planRender();show(st.view);
 })();

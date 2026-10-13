@@ -10,7 +10,7 @@ Comunidad de torneos pagos de **Call of Duty Mobile** (Battle Royale en sala pri
 
 | Ruta | Para qué sirve |
 |---|---|
-| `index.html` | App para el teléfono: calculadora de ganancia (por partida y por mes) y plan de acción con tareas por socio. Es lo que publica Vercel. |
+| `index.html` | App para el teléfono con 3 pestañas: **Calculadora** (ganancia por partida y por mes), **Plan** (tareas por socio) y **Acuerdos** (reglas y decisiones). Es lo que publica Vercel. |
 | `docs/00-resumen-del-negocio.md` | Qué es el negocio, cómo funciona y quién hace qué. |
 | `docs/01-analisis-y-riesgos.md` | Opinión objetiva: lo que puede salir bien, lo que puede salir mal y cómo prevenirlo. |
 | `docs/02-numeros-y-rentabilidad.md` | Cálculos base: margen por torneo, punto de equilibrio, sensibilidad. |
@@ -25,7 +25,8 @@ Comunidad de torneos pagos de **Call of Duty Mobile** (Battle Royale en sala pri
 1. Abre el enlace de Vercel en el teléfono. Tip: "Agregar a pantalla de inicio" para usarla como app.
 2. **Calculadora:** mueve la cantidad de jugadores y las partidas al mes. En *Ajustes* cambias entrada, kill, premios y tasa BCV.
 3. **Plan:** marca las tareas listas. Filtra por Oswaldo o Marcos.
-4. Las marcas se guardan **solo en ese teléfono**. Toca **Copiar avance** y pégalo en el chat con Claude para mantener el plan al día.
+4. **Acuerdos:** todo lo decidido hasta ahora (formato, dinero, moderador, inscripción, reglas, equipo). Enlace directo: `…vercel.app/#acuerdos`.
+5. Las marcas se guardan **solo en ese teléfono**. Toca **Copiar avance** y pégalo en el chat con Claude para mantener el plan al día.
 
 Las preguntas de definición del negocio se responden en el chat, no en la página.
 
