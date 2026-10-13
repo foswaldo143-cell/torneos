@@ -2,59 +2,54 @@
 
 *Cálculo base al 13/10/2026 · Tasa BCV: Bs 876,80 por USD*
 
-## Supuestos
+## Supuesto principal (peor caso para la caja)
 
-- Modo **solo**, sin redespliegue: cada jugador muere como máximo una vez.
-- En una sala con *n* jugadores pagos más el moderador, hay *n* muertes (todos menos el ganador).
-- No todas las muertes son kills de un jugador: zona, caídas y vehículos no se pagan. Caso esperado: **80 %** de las muertes son kills.
-- Premios fijos: top 3 ($22) + bono del moderador ($10) = **$32 = Bs 28.058**.
-- Moderador sin pago (por ahora).
+Queda **un solo jugador en pie** y todos los demás mueren por kill de otro jugador. Con *n* jugadores pagos se pagan **n − 1 kills**. El moderador entra aparte, no paga entrada y se asume que lo eliminan (se paga el bono).
 
-## Margen por jugador
+En la práctica algunas muertes son por zona o caídas, así que la ganancia real será un poco mayor.
 
-| Caso | Fórmula | Margen por jugador |
-|---|---|---|
-| Esperado (80 % kills) | 3.000 − 2.000 × 0,8 | **Bs 1.400** |
-| Peor caso (100 % kills) | 3.000 − 2.000 | **Bs 1.000** |
+## Fórmula
 
-## Punto de equilibrio
+```
+Ganancia = n × entrada − (n − 1) × pago por kill − (premios top 3 + bono moderador) × tasa BCV
+```
 
-| Caso | Cálculo | Jugadores mínimos |
-|---|---|---|
-| Esperado | 28.058 ÷ 1.400 | **21** |
-| Peor caso | 28.058 ÷ 1.000 | **29** |
+Con los montos actuales: entrada Bs 3.000, kill Bs 2.000, premios $22 + bono $10 = $32 (Bs 28.058).
 
-## Escenarios por torneo (caso esperado)
+- Cada jugador extra suma **Bs 1.000**.
+- Punto de equilibrio: **27 jugadores**.
 
-| Jugadores | Ingreso | Kills pagadas | Premios fijos | Margen | Margen en USD |
+## Ganancia por partida
+
+| Jugadores | Entradas | Kills pagadas | Premios + bono | Ganancia | En USD |
 |---|---|---|---|---|---|
-| 20 | Bs 60.000 | Bs 32.000 | Bs 28.058 | Bs −58 | ≈ $0 |
-| 30 | Bs 90.000 | Bs 48.000 | Bs 28.058 | Bs 13.942 | $15,90 |
-| 49 | Bs 147.000 | Bs 78.000 | Bs 28.058 | Bs 40.942 | $46,70 |
-| 75 | Bs 225.000 | Bs 120.000 | Bs 28.058 | Bs 76.942 | $87,75 |
-| 99 | Bs 297.000 | Bs 158.000 | Bs 28.058 | Bs 110.942 | $126,53 |
+| 20 | Bs 60.000 | Bs 38.000 | Bs 28.058 | Bs −6.058 | −$6,91 |
+| 27 | Bs 81.000 | Bs 52.000 | Bs 28.058 | Bs 942 | $1,07 |
+| 30 | Bs 90.000 | Bs 58.000 | Bs 28.058 | Bs 3.942 | $4,50 |
+| 49 | Bs 147.000 | Bs 96.000 | Bs 28.058 | Bs 22.942 | $26,17 |
+| 75 | Bs 225.000 | Bs 148.000 | Bs 28.058 | Bs 48.942 | $55,82 |
+| 99 | Bs 297.000 | Bs 196.000 | Bs 28.058 | Bs 72.942 | $83,19 |
 
-*Kills redondeadas al entero más cercano (ej.: 49 × 0,8 = 39 kills).*
+## Proyección mensual (con 49 jugadores por partida)
 
-## Proyección mensual (1 torneo diario, 26 días)
-
-| Jugadores promedio | Margen mensual aprox. |
+| Partidas al mes | Ganancia aprox. |
 |---|---|
-| 30 | $413 |
-| 49 | $1.214 |
-| 75 | $2.282 |
+| 8 (fines de semana) | $209 |
+| 20 (días hábiles) | $523 |
+| 30 (1 diaria) | $785 |
+| 60 (2 diarias) | $1.570 |
 
-Antes de costos: publicidad, pago al moderador, comisiones bancarias, datos móviles y el tiempo del equipo.
+Antes de publicidad, pago al moderador, comisiones bancarias y datos móviles.
 
 ## Lo que más mueve el resultado
 
-1. **Cupo:** cada jugador extra suma ~Bs 1.400.
-2. **Redespliegue:** si se permite, el peor caso puede pasar a pérdida.
-3. **Tasa BCV:** si la entrada queda fija en Bs y el dólar sube, los premios en USD cuestan más cada semana.
-4. **Pago al moderador:** cada $5 por torneo sube el equilibrio en unos 3 jugadores.
+1. **Cupo:** por debajo de 27 jugadores se pierde.
+2. **Margen por jugador:** con Bs 1.000 es estrecho. Subir la entrada a Bs 3.500 o bajar el kill a Bs 1.800 cambia mucho el punto de equilibrio.
+3. **Tasa BCV:** los premios están en dólares; si la entrada queda fija en Bs y el dólar sube, la ganancia baja.
+4. **Pago al moderador:** cada $5 por partida sube el equilibrio en unos 5 jugadores.
 
 ## Ojo con la licencia
 
 Si Activision aprueba el torneo con la condición de que la inscripción no financie premios, este modelo hay que rediseñarlo. Ver `01-analisis-y-riesgos.md`, riesgo 1.
 
-El simulador de la página (`index.html`, sección 00) permite cambiar todos estos valores.
+La calculadora de la página permite cambiar todos estos valores.

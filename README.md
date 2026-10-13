@@ -4,11 +4,13 @@ Comunidad de torneos pagos de **Call of Duty Mobile** (Battle Royale en sala pri
 
 > Estado: **fase de definición** (13/10/2026). Todavía no hay nada operando.
 
+**Socios:** Oswaldo Farias (cuentas, pagos, banco, legal) · Marcos (operativo, redes, diseño, publicidad y moderación).
+
 ## Qué hay en este repositorio
 
 | Ruta | Para qué sirve |
 |---|---|
-| `index.html` | Página web del briefing: formulario de preguntas + simulador de rentabilidad. Es lo que publica Vercel. |
+| `index.html` | App para el teléfono: calculadora de ganancia (por partida y por mes) y plan de acción con tareas por socio. Es lo que publica Vercel. |
 | `docs/00-resumen-del-negocio.md` | Qué es el negocio, cómo funciona y quién hace qué. |
 | `docs/01-analisis-y-riesgos.md` | Opinión objetiva: lo que puede salir bien, lo que puede salir mal y cómo prevenirlo. |
 | `docs/02-numeros-y-rentabilidad.md` | Cálculos base: margen por torneo, punto de equilibrio, sensibilidad. |
@@ -17,9 +19,12 @@ Comunidad de torneos pagos de **Call of Duty Mobile** (Battle Royale en sala pri
 
 ## Cómo usar la página
 
-1. Abre el enlace de Vercel (o `index.html` en el navegador).
-2. Responde las preguntas. Se guardan **solo en tu navegador**: cada socio tiene sus propias respuestas.
-3. Al terminar, toca **Copiar respuestas** y pégalas en el chat con Claude para generar el plan de acción definitivo.
+1. Abre el enlace de Vercel en el teléfono. Tip: "Agregar a pantalla de inicio" para usarla como app.
+2. **Calculadora:** mueve la cantidad de jugadores y las partidas al mes. En *Ajustes* cambias entrada, kill, premios y tasa BCV.
+3. **Plan:** marca las tareas listas. Filtra por Oswaldo o Marcos.
+4. Las marcas se guardan **solo en ese teléfono**. Toca **Copiar avance** y pégalo en el chat con Claude para mantener el plan al día.
+
+Las preguntas de definición del negocio se responden en el chat, no en la página.
 
 ## Publicar en Vercel (una sola vez)
 

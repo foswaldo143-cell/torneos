@@ -8,7 +8,10 @@ Cada decisión importante va aquí, con fecha y motivo. Así los socios saben po
 | 12/10/2026 | Modelo base: entrada Bs 3.000, Bs 2.000 por kill, top 3 $10/$7/$5 | Borrador inicial; se ajusta con el piloto | Socios |
 | 12/10/2026 | Moderador cazado con bono de $10 | Diferenciador y fuente de contenido | Socios |
 | 12/10/2026 | Usar una cuenta bancaria separada para los torneos | Evitar bloqueos y mezclar fondos | Oswaldo |
-| 13/10/2026 | Repositorio `torneos` en GitHub + página en Vercel | Que ambos socios accedan al briefing y la documentación | Oswaldo |
+| 13/10/2026 | Repositorio `torneos` en GitHub + página en Vercel | Que ambos socios accedan a la calculadora y al plan | Oswaldo |
+| 13/10/2026 | Roles: Oswaldo en cuentas y dinero; Marcos en operativo, redes, diseño y moderación | Repartir responsabilidades | Oswaldo |
+| 13/10/2026 | Calcular siempre con el peor caso: todos mueren menos uno | Proyecciones conservadoras | Oswaldo |
+| 13/10/2026 | Las preguntas de definición se responden en el chat con Claude | Que todo quede en un solo lugar | Oswaldo |
 
 ## Decisiones pendientes
 

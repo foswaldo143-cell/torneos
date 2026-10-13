@@ -3,525 +3,546 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Briefing interno para definir la comunidad de torneos de Call of Duty Mobile.">
+<meta name="theme-color" content="#0F1317" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#ECEEEA" media="(prefers-color-scheme: light)">
+<meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="robots" content="noindex">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
-<title>Briefing de Torneos CODM</title>
+<title>Panel Torneos CODM</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: expediente táctico — barra de progreso fija arriba, riel de secciones a la izquierda, columna de preguntas; simulador de rentabilidad como primera "misión". */
+/* Layout: app de bolsillo — una columna con barra de pestañas inferior en el teléfono; en pantallas anchas, calculadora y plan lado a lado. */
 :root{
-  --bg:#EDEFEC; --surface:#FFFFFF; --sunk:#E3E6E2; --line:#CDD2CC;
-  --fg:#161A1F; --muted:#5E6670; --accent:#B4690C; --accent-ink:#FFFFFF; --accent-soft:#F6E6CF;
-  --alert:#C23A26; --alert-soft:#F7DDD7; --ok:#2F7A4E; --ok-soft:#D9EEDF;
-  --stripe:#161A1F;
+  --bg:#ECEEEA; --surface:#FFFFFF; --sunk:#E2E5E0; --line:#CBD0C9;
+  --fg:#15191E; --muted:#5C646E; --accent:#B4690C; --accent-ink:#FFFFFF; --accent-soft:#F5E4CC;
+  --neg:#C23A26; --neg-soft:#F6DCD6; --pos:#2C7A4B; --pos-soft:#D7EDDE;
+  --os:#2F5FA8; --os-soft:#DCE6F5; --ma:#8A3FA0; --ma-soft:#EEDFF2;
   --f-display:"Chakra Petch","Arial Narrow",system-ui,sans-serif;
   --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
-  --r:6px;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --r:10px; --nav-h:64px;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#11151A; --surface:#181E25; --sunk:#0D1014; --line:#28313B;
-  --fg:#E7E3D8; --muted:#8D96A0; --accent:#F2A93B; --accent-ink:#1A1206; --accent-soft:#3A2A12;
-  --alert:#F06A52; --alert-soft:#3A1C17; --ok:#5FC28A; --ok-soft:#16301F; --stripe:#F2A93B;
+  --bg:#0F1317; --surface:#171D23; --sunk:#0B0E11; --line:#27303A;
+  --fg:#E8E4D9; --muted:#8C959F; --accent:#F2A93B; --accent-ink:#1A1206; --accent-soft:#3A2A12;
+  --neg:#F06A52; --neg-soft:#3A1C17; --pos:#5FC28A; --pos-soft:#14301F;
+  --os:#7FA9EC; --os-soft:#1A2A44; --ma:#D49AE6; --ma-soft:#35203D;
   color-scheme:dark;
 }}
 :root[data-theme="dark"]{
-  --bg:#11151A; --surface:#181E25; --sunk:#0D1014; --line:#28313B;
-  --fg:#E7E3D8; --muted:#8D96A0; --accent:#F2A93B; --accent-ink:#1A1206; --accent-soft:#3A2A12;
-  --alert:#F06A52; --alert-soft:#3A1C17; --ok:#5FC28A; --ok-soft:#16301F; --stripe:#F2A93B;
+  --bg:#0F1317; --surface:#171D23; --sunk:#0B0E11; --line:#27303A;
+  --fg:#E8E4D9; --muted:#8C959F; --accent:#F2A93B; --accent-ink:#1A1206; --accent-soft:#3A2A12;
+  --neg:#F06A52; --neg-soft:#3A1C17; --pos:#5FC28A; --pos-soft:#14301F;
+  --os:#7FA9EC; --os-soft:#1A2A44; --ma:#D49AE6; --ma-soft:#35203D;
   color-scheme:dark;
 }
 *{box-sizing:border-box}
-body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
-button,input,textarea{font:inherit;color:inherit}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.num{font-variant-numeric:tabular-nums}
 
-/* ---------- Barra superior ---------- */
-.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-.topbar-in{max-width:1180px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-.brand{font-family:var(--f-display);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:13px;display:flex;align-items:center;gap:8px}
-.brand i{width:10px;height:10px;background:var(--accent);display:inline-block;transform:rotate(45deg)}
-.prog{flex:1 1 220px;display:flex;align-items:center;gap:10px;min-width:0}
-.prog-track{flex:1;height:8px;background:var(--sunk);border:1px solid var(--line);border-radius:2px;overflow:hidden;position:relative}
-.prog-fill{height:100%;width:0;background:repeating-linear-gradient(-45deg,var(--accent) 0 6px,color-mix(in srgb,var(--accent) 70%,var(--bg)) 6px 12px);transition:width .4s ease}
-.prog-txt{font-family:var(--f-mono);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
-.btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--surface);padding:8px 14px;border-radius:var(--r);cursor:pointer;font-family:var(--f-display);font-weight:600;letter-spacing:.04em;text-transform:uppercase;font-size:12.5px;transition:background .15s,border-color .15s,transform .1s}
-.btn:hover{border-color:var(--accent)}
-.btn:active{transform:translateY(1px)}
-.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
-.btn.primary:hover{filter:brightness(1.06)}
-.btn.ghost{background:transparent}
-.btn.danger{border-color:var(--alert);color:var(--alert)}
+/* ---------- Cabecera ---------- */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.top-in{max-width:1120px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:12px}
+.brand{font-family:var(--f-display);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:14px;display:flex;align-items:center;gap:9px;flex:1;min-width:0}
+.brand i{width:11px;height:11px;background:var(--accent);transform:rotate(45deg);flex:none}
+.rate-pill{font-family:var(--f-mono);font-size:11.5px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:4px 10px;white-space:nowrap;background:var(--surface)}
+.rate-pill b{color:var(--fg);font-weight:500}
+.tabs-top{display:none;gap:4px;background:var(--sunk);border:1px solid var(--line);border-radius:999px;padding:3px}
 
-/* ---------- Encabezado ---------- */
-.wrap{max-width:1180px;margin:0 auto;padding-inline:16px;padding-block:28px 80px}
-.hero{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:28px;align-items:end;padding-bottom:26px;border-bottom:1px solid var(--line);position:relative}
-.hazard{height:6px;margin-bottom:22px;background:repeating-linear-gradient(-45deg,var(--stripe) 0 10px,transparent 10px 20px);opacity:.85;max-width:180px}
-.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-h1{font-family:var(--f-display);font-weight:700;font-size:clamp(34px,6vw,62px);line-height:.98;letter-spacing:-.01em;margin:10px 0 14px;text-transform:uppercase;text-wrap:balance}
-h1 em{font-style:normal;color:var(--accent)}
-.lede{max-width:58ch;color:var(--muted);margin:0}
-.lede b{color:var(--fg);font-weight:600}
-.manifest{font-family:var(--f-mono);font-size:12.5px;border:1px solid var(--line);background:var(--surface);border-radius:var(--r);padding:14px 16px;display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-variant-numeric:tabular-nums}
-.manifest dt{color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
-.manifest dd{margin:0;text-align:right}
+/* ---------- Contenedor ---------- */
+.app{max-width:1120px;margin:0 auto;padding-inline:16px;padding-block:18px calc(var(--nav-h) + 28px + env(safe-area-inset-bottom,0px))}
+.view{display:flex;flex-direction:column;gap:14px;min-width:0}
+.view[hidden]{display:none!important}
+.eyebrow{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px}
+.card-h{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+.card-h h2{font-family:var(--f-display);font-weight:700;text-transform:uppercase;font-size:15px;letter-spacing:.04em;margin:0}
 
-/* ---------- Hallazgos ---------- */
-.intel{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:24px 0 8px}
-.intel article{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
-.tag{align-self:flex-start;font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border-radius:3px}
-.tag.alert{background:var(--alert-soft);color:var(--alert)}
-.tag.warn{background:var(--accent-soft);color:var(--accent)}
-.tag.ok{background:var(--ok-soft);color:var(--ok)}
-.intel h3{font-family:var(--f-display);font-size:17px;font-weight:600;margin:2px 0 0;line-height:1.2}
-.intel p{margin:0;color:var(--muted);font-size:14px}
+/* ---------- Resultado principal ---------- */
+.hero{position:relative;overflow:hidden;padding:18px 16px 16px}
+.hero::before{content:"";position:absolute;inset:0 0 auto 0;height:5px;background:repeating-linear-gradient(-45deg,var(--accent) 0 8px,transparent 8px 16px)}
+.hero .label{margin-top:4px}
+.profit{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin:4px 0 2px}
+.profit .usd{font-family:var(--f-display);font-weight:700;font-size:clamp(46px,14vw,68px);line-height:1;letter-spacing:-.01em}
+.profit .usd.pos{color:var(--pos)} .profit .usd.neg{color:var(--neg)}
+.profit .bs{font-family:var(--f-mono);font-size:14px;color:var(--muted)}
+.verdict{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;padding:6px 10px;border-radius:6px;margin-top:8px}
+.verdict.pos{background:var(--pos-soft);color:var(--pos)} .verdict.neg{background:var(--neg-soft);color:var(--neg)}
+.verdict i{width:8px;height:8px;border-radius:50%;background:currentColor}
 
-/* ---------- Cuerpo ---------- */
-.body{display:grid;grid-template-columns:230px minmax(0,1fr);gap:36px;margin-top:30px;align-items:start}
-.rail{position:sticky;top:calc(env(safe-area-inset-top,0px) + 70px);display:flex;flex-direction:column;gap:2px}
-.rail-title{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
-.rail a{display:grid;grid-template-columns:34px 1fr auto;align-items:center;gap:6px;padding:8px 10px;border-radius:var(--r);text-decoration:none;color:var(--fg);font-size:14px;border:1px solid transparent}
-.rail a:hover{background:var(--surface);border-color:var(--line)}
-.rail a.active{background:var(--surface);border-color:var(--line)}
-.rail a.active .rc{color:var(--accent)}
-.rc{font-family:var(--f-mono);font-size:11.5px;color:var(--muted)}
-.rn{font-family:var(--f-mono);font-size:11.5px;color:var(--muted);font-variant-numeric:tabular-nums}
-.rn.done{color:var(--ok)}
-.rail .btn{margin-top:14px;justify-content:center}
+/* ---------- Stepper jugadores ---------- */
+.stepper{display:grid;grid-template-columns:56px 1fr 56px;gap:10px;align-items:center;margin:14px 0 6px}
+.stepper button{height:56px;border-radius:12px;border:1px solid var(--line);background:var(--sunk);font-family:var(--f-display);font-size:26px;font-weight:600;display:grid;place-items:center;touch-action:manipulation;transition:transform .08s,background .15s}
+.stepper button:active{transform:scale(.94);background:var(--accent-soft)}
+.stepper .val{text-align:center}
+.stepper .val b{display:block;font-family:var(--f-display);font-weight:700;font-size:40px;line-height:1}
+.stepper .val span{font-size:12.5px;color:var(--muted)}
+input[type=range]{width:100%;accent-color:var(--accent);height:32px;margin:0}
+.range-scale{display:flex;justify-content:space-between;font-family:var(--f-mono);font-size:11px;color:var(--muted);margin-top:-4px}
 
-section.sec{scroll-margin-top:90px;margin-bottom:44px}
-.sec-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:6px}
-.sec-code{font-family:var(--f-mono);font-size:12px;color:var(--accent);letter-spacing:.1em;border:1px solid var(--accent);padding:2px 7px;border-radius:3px}
-.sec h2{font-family:var(--f-display);font-weight:700;font-size:clamp(22px,3.2vw,30px);margin:0;text-transform:uppercase;letter-spacing:.01em;text-wrap:balance}
-.sec-intro{color:var(--muted);margin:0 0 18px;max-width:64ch}
-.qs{display:flex;flex-direction:column;gap:12px}
-.q{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;position:relative;transition:border-color .2s}
-.q.answered{border-left:3px solid var(--ok);padding-left:16px}
-.q.key{background:linear-gradient(var(--surface),var(--surface)) padding-box,linear-gradient(90deg,var(--accent),var(--line) 40%) border-box;border:1px solid transparent}
-.q.key.answered{border-left:3px solid var(--ok)}
-.qhead{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;align-items:baseline}
-.qnum{font-family:var(--f-mono);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
-.qhead label,.qhead .qlabel{font-weight:600;font-size:15.5px;line-height:1.4}
-.flag{display:inline-block;margin-left:8px;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);vertical-align:2px}
-.why{margin:6px 0 12px;color:var(--muted);font-size:13.5px;padding-left:calc(12px + 3.2ch)}
-.why b{color:var(--fg);font-weight:500}
-.ctrl{padding-left:calc(12px + 3.2ch);display:flex;flex-direction:column;gap:8px}
-textarea,input[type=text],input[type=number]{width:100%;background:var(--sunk);border:1px solid var(--line);border-radius:var(--r);padding:10px 12px;line-height:1.45;transition:border-color .15s,background .15s}
-textarea{min-height:64px;resize:vertical}
-textarea:focus,input:focus{outline:none;border-color:var(--accent);background:var(--bg)}
-textarea::placeholder,input::placeholder{color:color-mix(in srgb,var(--muted) 75%,transparent)}
-.chips{display:flex;flex-wrap:wrap;gap:8px}
-.chip{border:1px solid var(--line);background:var(--sunk);padding:6px 12px;border-radius:999px;cursor:pointer;font-size:13.5px;transition:all .15s}
-.chip:hover{border-color:var(--accent)}
-.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:500}
-.note{min-height:44px}
+/* ---------- Desglose ---------- */
+.rows{display:flex;flex-direction:column}
+.row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;padding:10px 0;border-bottom:1px dashed var(--line);align-items:baseline}
+.row:last-child{border-bottom:0}
+.row .k{font-size:14px}
+.row .k small{display:block;color:var(--muted);font-size:12px}
+.row .v{font-family:var(--f-mono);font-size:14.5px;text-align:right;white-space:nowrap}
+.row .v small{display:block;color:var(--muted);font-size:11.5px}
+.row.minus .v{color:var(--neg)}
+.row.total{border-top:2px solid var(--fg);border-bottom:0;margin-top:4px;padding-top:12px}
+.row.total .k{font-family:var(--f-display);font-weight:700;text-transform:uppercase;letter-spacing:.03em}
+.row.total .v{font-weight:500;font-size:16px}
 
-/* ---------- Simulador ---------- */
-.sim{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:26px}
-.sim-in{display:grid;grid-template-columns:1fr 1fr;gap:12px 14px;align-content:start}
-.field{display:flex;flex-direction:column;gap:4px;min-width:0}
-.field label{font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
-.field input{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+/* ---------- Gráfico ---------- */
+.chart-wrap{margin-top:4px}
+.chart{width:100%;height:auto;display:block}
+.chart .b-pos{fill:color-mix(in srgb,var(--pos) 55%,var(--surface))}
+.chart .b-neg{fill:color-mix(in srgb,var(--neg) 55%,var(--surface))}
+.chart .b-cur{fill:var(--accent)}
+.chart .axis{stroke:var(--line);stroke-width:1}
+.chart .zero{stroke:var(--fg);stroke-width:1;stroke-dasharray:3 3;opacity:.55}
+.chart text{fill:var(--muted);font-family:var(--f-mono);font-size:9px}
+.chart .marker-t{fill:var(--accent);font-weight:500}
+.chart-note{font-size:12.5px;color:var(--muted);margin:6px 0 0}
+
+/* ---------- Mes ---------- */
+.month{display:grid;gap:12px}
+.month-res{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.month-res .usd{font-family:var(--f-display);font-weight:700;font-size:clamp(34px,10vw,44px);line-height:1}
+.month-res .usd.pos{color:var(--pos)} .month-res .usd.neg{color:var(--neg)}
+.month-res .bs{font-family:var(--f-mono);font-size:13px;color:var(--muted)}
+.presets{display:flex;gap:8px;flex-wrap:wrap}
+.preset{border:1px solid var(--line);background:var(--sunk);border-radius:999px;padding:7px 13px;font-size:13px;min-height:36px}
+.preset[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+.games-line{display:flex;align-items:center;justify-content:space-between;font-size:14px}
+.games-line b{font-family:var(--f-display);font-size:22px}
+
+/* ---------- Ajustes ---------- */
+details.settings summary{list-style:none;display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-family:var(--f-display);font-weight:700;text-transform:uppercase;font-size:15px;letter-spacing:.04em;min-height:28px}
+details.settings summary::-webkit-details-marker{display:none}
+details.settings summary::after{content:"+";font-size:22px;color:var(--accent);font-weight:600;transition:transform .2s}
+details.settings[open] summary::after{transform:rotate(45deg)}
+.settings-sub{display:block;font-size:12.5px;color:var(--muted);margin:2px 0 0;font-family:var(--f-body);text-transform:none;letter-spacing:0;font-weight:400}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.field{display:flex;flex-direction:column;gap:5px;min-width:0}
 .field.full{grid-column:1/-1}
-.range-row{display:flex;align-items:center;gap:10px}
-.range-row input[type=range]{flex:1;accent-color:var(--accent)}
-.range-row output{font-family:var(--f-mono);font-size:13px;min-width:4ch;text-align:right;font-variant-numeric:tabular-nums}
-.sim-out{display:flex;flex-direction:column;gap:14px;min-width:0}
-.big{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
-.big .v{font-family:var(--f-display);font-weight:700;font-size:clamp(34px,5vw,48px);line-height:1;font-variant-numeric:tabular-nums}
-.big .u{font-family:var(--f-mono);color:var(--muted);font-size:13px}
-.big .v.neg{color:var(--alert)} .big .v.pos{color:var(--ok)}
-.bar{display:flex;height:34px;border-radius:4px;overflow:hidden;border:1px solid var(--line);background:var(--sunk)}
-.bar span{display:block;height:100%;transition:width .35s ease;position:relative}
-.bar .b-k{background:color-mix(in srgb,var(--accent) 85%,var(--bg))}
-.bar .b-p{background:color-mix(in srgb,var(--alert) 70%,var(--bg))}
-.bar .b-m{background:color-mix(in srgb,var(--ok) 75%,var(--bg))}
-.legend{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;font-size:12.5px}
-.legend div{display:flex;flex-direction:column;gap:2px;min-width:0}
-.legend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:6px;vertical-align:0}
-.legend b{font-family:var(--f-mono);font-weight:500;font-variant-numeric:tabular-nums;font-size:13px}
-.legend span{color:var(--muted)}
-.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:4px;overflow:hidden}
-.stats div{background:var(--surface);padding:10px 12px;display:flex;flex-direction:column;gap:2px}
-.stats span{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
-.stats b{font-family:var(--f-mono);font-weight:500;font-size:15px;font-variant-numeric:tabular-nums}
-.sim-note{font-size:12.5px;color:var(--muted);margin:0}
+.field label{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.field input{width:100%;background:var(--sunk);border:1px solid var(--line);border-radius:8px;padding:11px 12px;font-family:var(--f-mono);font-size:16px;font-variant-numeric:tabular-nums}
+.field input:focus{outline:none;border-color:var(--accent);background:var(--bg)}
+.switch{display:flex;align-items:center;justify-content:space-between;gap:12px;grid-column:1/-1;background:var(--sunk);border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:14px}
+.switch input{appearance:none;-webkit-appearance:none;width:46px;height:28px;border-radius:999px;background:var(--line);position:relative;flex:none;cursor:pointer;transition:background .2s}
+.switch input::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:var(--surface);transition:transform .2s;box-shadow:0 1px 2px rgba(0,0,0,.25)}
+.switch input:checked{background:var(--accent)}
+.switch input:checked::after{transform:translateX(18px)}
+.switch small{display:block;color:var(--muted);font-size:12px}
+.reset-link{background:none;border:0;color:var(--muted);text-decoration:underline;font-size:13px;padding:8px 0 0}
+.assume{font-size:12.5px;color:var(--muted);margin:0;padding:12px 14px;border-left:3px solid var(--accent);background:var(--surface);border-radius:0 var(--r) var(--r) 0}
 
-/* ---------- Cierre / copia ---------- */
-.outro{border:1px dashed var(--accent);border-radius:var(--r);padding:22px;display:flex;gap:20px;align-items:center;flex-wrap:wrap;background:var(--accent-soft)}
-.outro h3{font-family:var(--f-display);font-size:22px;margin:0;text-transform:uppercase}
-.outro p{margin:4px 0 0;color:var(--fg);opacity:.8;max-width:56ch}
-.outro > div{flex:1 1 280px;min-width:0}
-#fallback{width:100%;min-height:160px;font-family:var(--f-mono);font-size:12px;margin-top:12px}
-.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:var(--r);font-size:14px;opacity:0;pointer-events:none;transition:all .25s;z-index:50}
+/* ---------- Plan ---------- */
+.plan-head{display:flex;flex-direction:column;gap:12px}
+.plan-progress{display:flex;align-items:center;gap:14px}
+.ring{width:64px;height:64px;flex:none}
+.ring circle{fill:none;stroke-width:7}
+.ring .bgc{stroke:var(--sunk)}
+.ring .fgc{stroke:var(--accent);stroke-linecap:round;transition:stroke-dashoffset .4s}
+.ring text{fill:var(--fg);font-family:var(--f-display);font-weight:700;font-size:17px}
+.plan-progress h2{font-family:var(--f-display);text-transform:uppercase;font-size:20px;margin:0;line-height:1.1}
+.plan-progress p{margin:2px 0 0;color:var(--muted);font-size:13.5px}
+.who{display:flex;gap:6px;flex-wrap:wrap}
+.who button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 14px;font-size:13.5px;min-height:38px;display:inline-flex;align-items:center;gap:7px}
+.who button[aria-pressed="true"]{background:var(--fg);border-color:var(--fg);color:var(--bg)}
+.dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+.dot.os{background:var(--os)} .dot.ma{background:var(--ma)} .dot.am{background:linear-gradient(90deg,var(--os) 50%,var(--ma) 50%)}
+.roles{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.role{border:1px solid var(--line);border-radius:var(--r);padding:12px;background:var(--surface);min-width:0}
+.role b{display:flex;align-items:center;gap:7px;font-family:var(--f-display);text-transform:uppercase;font-size:14px;letter-spacing:.03em}
+.role p{margin:4px 0 0;font-size:12.5px;color:var(--muted)}
+.phase{padding:0;overflow:hidden}
+.phase > summary{list-style:none;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;padding:14px 16px;cursor:pointer}
+.phase > summary::-webkit-details-marker{display:none}
+.ph-code{font-family:var(--f-mono);font-size:11px;color:var(--accent);border:1px solid var(--accent);border-radius:4px;padding:2px 6px}
+.ph-title{font-family:var(--f-display);font-weight:700;text-transform:uppercase;font-size:15px;letter-spacing:.02em;line-height:1.2}
+.ph-title small{display:block;font-family:var(--f-body);text-transform:none;letter-spacing:0;font-weight:400;color:var(--muted);font-size:12.5px;margin-top:2px}
+.ph-count{font-family:var(--f-mono);font-size:12.5px;color:var(--muted);white-space:nowrap}
+.ph-count.done{color:var(--pos)}
+.ph-bar{height:3px;background:var(--sunk)}
+.ph-bar span{display:block;height:100%;background:var(--accent);transition:width .35s}
+.tasks{list-style:none;margin:0;padding:4px 0}
+.task{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;padding:12px 16px;border-top:1px solid var(--line);align-items:start;cursor:pointer;transition:background .15s}
+.task:hover{background:color-mix(in srgb,var(--sunk) 50%,transparent)}
+.task input{appearance:none;-webkit-appearance:none;width:26px;height:26px;border:2px solid var(--line);border-radius:7px;margin:0;display:grid;place-items:center;background:var(--surface);cursor:pointer;transition:all .15s;flex:none}
+.task input:checked{background:var(--pos);border-color:var(--pos)}
+.task input:checked::after{content:"";width:7px;height:12px;border:solid var(--surface);border-width:0 2.5px 2.5px 0;transform:rotate(45deg) translate(-1px,-1px)}
+.task .t{font-size:14.5px;line-height:1.4}
+.task .t small{display:block;color:var(--muted);font-size:12.5px;margin-top:2px}
+.task.done .t > span{text-decoration:line-through;color:var(--muted)}
+.owner{display:flex;width:fit-content;align-items:center;gap:5px;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;padding:2px 7px;border-radius:4px;margin-top:6px}
+.owner.os{background:var(--os-soft);color:var(--os)} .owner.ma{background:var(--ma-soft);color:var(--ma)} .owner.am{background:var(--sunk);color:var(--fg)}
+.task[hidden]{display:none!important}
+.copy-bar{display:flex;gap:10px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--line);background:var(--surface);padding:11px 16px;border-radius:10px;font-family:var(--f-display);font-weight:600;letter-spacing:.04em;text-transform:uppercase;font-size:13px;min-height:46px;flex:1 1 auto}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn.ghost{background:transparent}
+.btn.armed{border-color:var(--neg);color:var(--neg)}
+#fallback{width:100%;min-height:160px;font-family:var(--f-mono);font-size:12px;background:var(--sunk);border:1px solid var(--line);border-radius:8px;padding:10px}
+
+/* ---------- Barra inferior ---------- */
+.nav{position:fixed;left:0;right:0;bottom:0;z-index:30;background:color-mix(in srgb,var(--surface) 94%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line);padding:6px 16px calc(6px + env(safe-area-inset-bottom,0px));display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.nav button,.tabs-top button{border:0;background:transparent;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:52px;font-family:var(--f-display);font-weight:600;text-transform:uppercase;letter-spacing:.05em;font-size:12px;color:var(--muted)}
+.nav button svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8}
+.nav button[aria-selected="true"]{background:var(--accent-soft);color:var(--accent)}
+.tabs-top button{flex-direction:row;min-height:34px;padding:0 14px;border-radius:999px}
+.tabs-top button[aria-selected="true"]{background:var(--surface);color:var(--fg)}
+
+.toast{position:fixed;left:50%;bottom:calc(var(--nav-h) + 18px + env(safe-area-inset-bottom,0px));transform:translate(-50%,16px);background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:14px;opacity:0;pointer-events:none;transition:all .25s;z-index:50;max-width:calc(100% - 32px);text-align:center}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 
-/* ---------- Responsive ---------- */
-@media (max-width:900px){
-  .hero{grid-template-columns:1fr}
-  .intel{grid-template-columns:1fr}
-  .body{grid-template-columns:1fr;gap:18px}
-  .rail{position:static;flex-direction:row;overflow-x:auto;gap:6px;padding-bottom:6px;scrollbar-width:thin}
-  .rail-title,.rail .btn{display:none}
-  .rail a{grid-template-columns:auto auto;white-space:nowrap;border-color:var(--line);background:var(--surface)}
-  .rail a .rt{display:none}
-  .sim{grid-template-columns:1fr}
+/* ---------- Escritorio ---------- */
+@media (min-width:960px){
+  .app{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:28px;align-items:start;padding-block:26px 48px}
+  .view[hidden]{display:flex!important}
+  .nav{display:none}
+  .toast{bottom:24px}
+  #planView{position:sticky;top:76px;max-height:calc(100vh - 96px);overflow:auto;padding-right:4px}
 }
-@media (max-width:520px){
-  .why,.ctrl{padding-left:0}
-  .sim-in{grid-template-columns:1fr 1fr}
-  .legend{grid-template-columns:1fr}
-  .topbar .btn.ghost{display:none}
+@media (max-width:380px){
+  .roles{grid-template-columns:1fr}
+  .grid2{grid-template-columns:1fr}
 }
-@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 
 </head>
 <body>
-<header class="topbar">
-  <div class="topbar-in">
-    <div class="brand"><i></i>Briefing CODM</div>
-    <div class="prog" aria-label="Progreso del formulario">
-      <div class="prog-track"><div class="prog-fill" id="progFill"></div></div>
-      <span class="prog-txt" id="progTxt">0 / 0</span>
-    </div>
-    <button class="btn ghost" id="jumpEnd" type="button">Ir al final</button>
-    <button class="btn primary" id="copyTop" type="button">Copiar respuestas</button>
+<header class="top">
+  <div class="top-in">
+    <div class="brand"><i></i><span>Torneos CODM</span></div>
+    <span class="rate-pill num">BCV <b id="ratePill">876,80</b></span>
   </div>
 </header>
 
-<main class="wrap">
-  <div class="hero">
-    <div>
-      <div class="hazard" aria-hidden="true"></div>
-      <div class="eyebrow">Expediente 001 · Comunidad de torneos · Call of Duty Mobile</div>
-      <h1>Antes de la<br>primera <em>partida</em></h1>
-      <p class="lede">Responde lo que sepas, deja en blanco lo que no. Cada pregunta trae <b>por qué importa</b>. Tus respuestas se guardan en este navegador; cuando termines, toca <b>Copiar respuestas</b> y pégalas en el chat para armar el plan de acción paso a paso.</p>
+<main class="app">
+  <!-- ================= CALCULADORA ================= -->
+  <section class="view" id="calcView" aria-label="Calculadora">
+    <div class="card hero">
+      <div class="eyebrow label">Ganancia estimada por partida</div>
+      <div class="profit"><span class="usd num" id="pUsd">$0</span><span class="bs num" id="pBs">Bs 0</span></div>
+
+      <div class="stepper">
+        <button type="button" id="minus" aria-label="Quitar un jugador">−</button>
+        <div class="val"><b class="num" id="nOut">49</b><span>jugadores pagan</span></div>
+        <button type="button" id="plus" aria-label="Agregar un jugador">+</button>
+      </div>
+      <input type="range" id="nRange" min="2" max="99" step="1" value="49" aria-label="Jugadores que pagan">
+      <div class="range-scale num"><span>2</span><span>50</span><span>99</span></div>
+      <div class="verdict" id="verdict"><i></i><span id="verdictTxt">—</span></div>
     </div>
-    <dl class="manifest">
-      <dt>Juego</dt><dd>CoD Mobile · BR privada</dd>
-      <dt>Capacidad sala</dt><dd>hasta 100 jugadores</dd>
-      <dt>Entrada propuesta</dt><dd>Bs 3.000</dd>
-      <dt>Pago por kill</dt><dd>Bs 2.000</dd>
-      <dt>Top 3</dt><dd>$10 · $7 · $5</dd>
-      <dt>Bono "cazar al mod"</dt><dd>$10</dd>
-      <dt>Tasa BCV ref.</dt><dd>Bs 876,80 · 13/10/26</dd>
-    </dl>
-  </div>
 
-  <div class="intel" aria-label="Hallazgos previos">
-    <article>
-      <span class="tag alert">Riesgo alto</span>
-      <h3>Activision sí exige licencia</h3>
-      <p>Todo torneo de CoD necesita aprobación previa y licencia, incluso los pequeños. Y la inscripción solo puede cubrir costos de organización: no puede alimentar el pozo de premios. Tu modelo actual hace justo eso.</p>
-    </article>
-    <article>
-      <span class="tag warn">Atención</span>
-      <h3>Solo mayores de 18</h3>
-      <p>La regla de Activision pide participantes de 18 años o más. Gran parte del público de CoD Mobile es menor, así que necesitan una forma de verificar edad.</p>
-    </article>
-    <article>
-      <span class="tag ok">Viable</span>
-      <h3>Los números cierran con ~25 jugadores</h3>
-      <p>Con los montos propuestos, cada jugador deja cerca de Bs 1.000 de margen bruto. Los premios fijos en dólares se cubren a partir de unos 21 a 29 inscritos. Ajústalo abajo.</p>
-    </article>
-  </div>
+    <div class="card">
+      <div class="card-h"><h2>De dónde sale</h2><span class="eyebrow num" id="lobbyTxt">Sala: 50</span></div>
+      <div class="rows">
+        <div class="row"><div class="k">Entradas cobradas<small id="rEntryD">49 × Bs 3.000</small></div><div class="v num" id="rEntry">—</div></div>
+        <div class="row minus"><div class="k">Kills pagadas<small id="rKillD">48 jugadores mueren × Bs 2.000</small></div><div class="v num" id="rKill">—</div></div>
+        <div class="row minus"><div class="k">Premios top 3<small id="rTopD">$10 + $7 + $5</small></div><div class="v num" id="rTop">—</div></div>
+        <div class="row minus" id="rowBounty"><div class="k">Bono por cazar al moderador<small>Se asume que lo eliminan</small></div><div class="v num" id="rBounty">—</div></div>
+        <div class="row minus" id="rowMod" hidden><div class="k">Pago al moderador</div><div class="v num" id="rMod">—</div></div>
+        <div class="row total"><div class="k">Te queda</div><div class="v num" id="rTotal">—</div></div>
+      </div>
+    </div>
 
-  <div class="body">
-    <nav class="rail" id="rail" aria-label="Secciones">
-      <div class="rail-title">Secciones</div>
-    </nav>
-    <div id="sections"></div>
-  </div>
+    <div class="card">
+      <div class="card-h"><h2>Ganancia según jugadores</h2></div>
+      <div class="chart-wrap"><svg class="chart" id="chart" viewBox="0 0 340 150" role="img" aria-label="Ganancia por partida según cantidad de jugadores"></svg></div>
+      <p class="chart-note" id="chartNote">—</p>
+    </div>
+
+    <div class="card month">
+      <div class="card-h" style="margin-bottom:0"><h2>Proyección del mes</h2></div>
+      <div class="month-res"><span class="usd num" id="mUsd">$0</span><span class="bs num" id="mBs">Bs 0</span></div>
+      <div class="games-line"><span>Partidas al mes</span><b class="num" id="gOut">30</b></div>
+      <input type="range" id="gRange" min="1" max="60" step="1" value="30" aria-label="Partidas al mes">
+      <div class="presets" id="presets">
+        <button type="button" class="preset" data-g="8">Fines de semana · 8</button>
+        <button type="button" class="preset" data-g="20">Días hábiles · 20</button>
+        <button type="button" class="preset" data-g="30">1 diaria · 30</button>
+        <button type="button" class="preset" data-g="60">2 diarias · 60</button>
+      </div>
+      <p class="chart-note" id="mNote">—</p>
+    </div>
+
+    <details class="card settings" id="settings">
+      <summary><span>Ajustes<span class="settings-sub" id="setSub">Entrada, kill, premios y tasa</span></span></summary>
+      <div class="grid2">
+        <div class="field"><label for="sEntry">Entrada (Bs)</label><input id="sEntry" type="number" inputmode="decimal" min="0" step="100"></div>
+        <div class="field"><label for="sKill">Pago por kill (Bs)</label><input id="sKill" type="number" inputmode="decimal" min="0" step="100"></div>
+        <div class="field"><label for="sP1">1.er lugar ($)</label><input id="sP1" type="number" inputmode="decimal" min="0" step="1"></div>
+        <div class="field"><label for="sP2">2.º lugar ($)</label><input id="sP2" type="number" inputmode="decimal" min="0" step="1"></div>
+        <div class="field"><label for="sP3">3.er lugar ($)</label><input id="sP3" type="number" inputmode="decimal" min="0" step="1"></div>
+        <div class="field"><label for="sBounty">Bono moderador ($)</label><input id="sBounty" type="number" inputmode="decimal" min="0" step="1"></div>
+        <div class="field"><label for="sMod">Pago al moderador ($)</label><input id="sMod" type="number" inputmode="decimal" min="0" step="1"></div>
+        <div class="field"><label for="sRate">Tasa BCV (Bs/$)</label><input id="sRate" type="number" inputmode="decimal" min="0" step="0.01"></div>
+        <label class="switch" for="sDies"><span>Eliminan al moderador<small>Si lo apagas, no se paga el bono</small></span><input id="sDies" type="checkbox" role="switch"></label>
+      </div>
+      <button type="button" class="reset-link" id="resetCalc">Volver a los valores iniciales</button>
+    </details>
+
+    <p class="assume">Cálculo: queda un solo jugador en pie y todos los demás mueren por kill de otro jugador, así que se pagan <b>jugadores − 1</b> kills. El moderador entra aparte y no paga entrada. Es el peor caso para la caja; en la práctica algunas muertes son por zona o caídas y ganarías un poco más.</p>
+  </section>
+
+  <!-- ================= PLAN ================= -->
+  <section class="view" id="planView" aria-label="Plan de acción" hidden>
+    <div class="plan-head">
+      <div class="plan-progress">
+        <svg class="ring" viewBox="0 0 64 64" aria-hidden="true"><circle class="bgc" cx="32" cy="32" r="27"/><circle class="fgc" id="ringFg" cx="32" cy="32" r="27" transform="rotate(-90 32 32)" stroke-dasharray="169.6" stroke-dashoffset="169.6"/><text x="32" y="38" text-anchor="middle" id="ringTxt">0%</text></svg>
+        <div><h2>Plan de acción</h2><p id="planSub">0 de 0 tareas listas</p></div>
+      </div>
+      <div class="roles">
+        <div class="role"><b><span class="dot os"></span>Oswaldo</b><p>Cuentas, pagos, banco, legal y números.</p></div>
+        <div class="role"><b><span class="dot ma"></span>Marcos</b><p>Operativo, redes, diseño, publicidad y moderación.</p></div>
+      </div>
+      <div class="who" id="who" role="group" aria-label="Filtrar por responsable">
+        <button type="button" data-w="all" aria-pressed="true">Todas</button>
+        <button type="button" data-w="os" aria-pressed="false"><span class="dot os"></span>Oswaldo</button>
+        <button type="button" data-w="ma" aria-pressed="false"><span class="dot ma"></span>Marcos</button>
+        <button type="button" data-w="pend" aria-pressed="false">Pendientes</button>
+      </div>
+    </div>
+    <div id="phases" style="display:flex;flex-direction:column;gap:12px"></div>
+    <div class="copy-bar">
+      <button type="button" class="btn primary" id="copyPlan">Copiar avance</button>
+      <button type="button" class="btn ghost" id="clearPlan">Desmarcar todo</button>
+    </div>
+    <textarea id="fallback" hidden readonly aria-label="Avance para copiar"></textarea>
+    <p class="assume">Las marcas se guardan en este teléfono. Cuando avances, toca <b>Copiar avance</b> y pégalo en el chat con Claude para actualizar el plan de los dos.</p>
+  </section>
 </main>
+
+<nav class="nav" role="tablist" aria-label="Secciones">
+  <button type="button" role="tab" id="tabCalc" aria-controls="calcView" aria-selected="true">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 12h2M12 12h2M16 12h0M8 16h2M12 16h2M16 16h0"/></svg>Calculadora</button>
+  <button type="button" role="tab" id="tabPlan" aria-controls="planView" aria-selected="false">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></svg>Plan</button>
+</nav>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
 (function(){
 "use strict";
-const KEY="briefing-codm-v1";
-const SECTIONS=[
- {id:"sim",code:"SEC-00",title:"Simulador de rentabilidad",short:"Simulador",intro:"Juega con los números antes de responder. El margen depende de cuántos se inscriben y de qué porcentaje de las muertes son kills de otro jugador (las muertes por zona, caída o vehículo no se pagan).",sim:true,qs:[]},
- {id:"equipo",code:"SEC-01",title:"El equipo y la meta",short:"Equipo",intro:"Quién está detrás, con cuánto y para qué. Esto define el ritmo de todo lo demás.",qs:[
-  {id:"socios",q:"¿Quiénes son los socios y qué aporta cada uno?",why:"Dinero, tiempo, habilidades (jugar, editar video, contabilidad). Define <b>quién hace qué</b> desde el día uno.",t:"area",ph:"Ej: Yo: contabilidad, pagos y legal. Mi hermano: juega y modera…",key:true},
-  {id:"horas",q:"¿Cuántas horas por semana puede dedicarle cada uno?",why:"Un torneo diario son unas 2 a 3 horas entre inscripción, partida y pagos. Dos diarios duplican eso.",t:"area"},
-  {id:"capital",q:"¿Cuánto dinero pueden invertir para arrancar? (USD)",why:"Necesitan un fondo de premios de reserva para las primeras noches, cuando todavía no hay suficientes inscritos.",t:"text",ph:"Ej: $150",key:true},
-  {id:"meta",q:"¿Qué quieren lograr en los primeros 3 meses?",why:"No es lo mismo un ingreso extra que construir una marca para escalar a más juegos o ciudades.",t:"chips",multi:true,opts:["Ingreso extra","Comunidad grande","Marca para escalar","Probar la idea rápido","Base para otros juegos"]},
-  {id:"meta_num",q:"Pónganle número: ¿cuántos jugadores por torneo y cuánta ganancia mensual sería un éxito?",why:"Con una meta concreta podemos calcular cuánta publicidad necesitan.",t:"text",ph:"Ej: 50 jugadores por noche, $300 al mes"}
+const KEY="torneos-codm-panel-v2";
+const DEF={n:49,games:30,entry:3000,kill:2000,p1:10,p2:7,p3:5,bounty:10,mod:0,rate:876.80,dies:true};
+let st={calc:Object.assign({},DEF),done:{},view:"calc",who:"all",open:{}};
+try{const raw=localStorage.getItem(KEY);if(raw){const p=JSON.parse(raw);if(p&&typeof p==="object"){st=Object.assign(st,p);st.calc=Object.assign({},DEF,p.calc||{});}}}catch(e){}
+let sT;function save(){clearTimeout(sT);sT=setTimeout(()=>{try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}},200);}
+const $=id=>document.getElementById(id);
+const c=st.calc;
+const bs=v=>"Bs "+Math.round(v).toLocaleString("es-VE");
+const usd=(v,d)=>{const a=Math.abs(v);const s=a.toLocaleString("es-VE",{minimumFractionDigits:d??2,maximumFractionDigits:d??2});return (v<0?"−$":"$")+s;};
+const usd0=v=>usd(v,Math.abs(v)>=1000?0:2);
+
+/* ---------- Cálculo ---------- */
+function fixedUsd(){return (+c.p1||0)+(+c.p2||0)+(+c.p3||0)+(c.dies?(+c.bounty||0):0)+(+c.mod||0);}
+function profitBs(n){const k=Math.max(0,n-1);return n*(+c.entry||0)-k*(+c.kill||0)-fixedUsd()*(+c.rate||0);}
+function breakEven(){for(let n=2;n<=100;n++){if(profitBs(n)>=0)return n;}return null;}
+
+function render(){
+  const n=c.n, rate=+c.rate||0, P=profitBs(n), Pu=rate?P/rate:0;
+  $("nOut").textContent=n;$("nRange").value=n;
+  $("ratePill").textContent=rate.toLocaleString("es-VE",{minimumFractionDigits:2,maximumFractionDigits:2});
+  const pu=$("pUsd");pu.textContent=usd(Pu);pu.className="usd num "+(P<0?"neg":"pos");
+  $("pBs").textContent=bs(P);
+  const be=breakEven(), v=$("verdict"), vt=$("verdictTxt");
+  if(be===null){v.className="verdict neg";vt.textContent="Con estos montos nunca hay ganancia: el pago por kill es muy alto.";}
+  else if(P>=0){v.className="verdict pos";vt.textContent=`Ganas desde ${be} jugadores. Cada jugador extra suma ${bs((+c.entry||0)-(+c.kill||0))}.`;}
+  else{v.className="verdict neg";vt.textContent=`Pierdes. Te faltan ${be-n} jugador${be-n===1?"":"es"} para no perder (mínimo ${be}).`;}
+  $("lobbyTxt").textContent="Sala: "+(n+1)+" con moderador";
+  // desglose
+  const k=Math.max(0,n-1);
+  $("rEntryD").textContent=`${n} × ${bs(+c.entry||0)}`;$("rEntry").innerHTML=`${bs(n*(+c.entry||0))}<small>${usd(rate?n*(+c.entry||0)/rate:0)}</small>`;
+  $("rKillD").textContent=`${k} mueren × ${bs(+c.kill||0)}`;$("rKill").innerHTML=`−${bs(k*(+c.kill||0))}<small>${usd(rate?k*(+c.kill||0)/rate:0)}</small>`;
+  const top=(+c.p1||0)+(+c.p2||0)+(+c.p3||0);
+  $("rTopD").textContent=`$${+c.p1||0} + $${+c.p2||0} + $${+c.p3||0}`;$("rTop").innerHTML=`−${bs(top*rate)}<small>${usd(top)}</small>`;
+  $("rowBounty").hidden=!c.dies;$("rBounty").innerHTML=`−${bs((+c.bounty||0)*rate)}<small>${usd(+c.bounty||0)}</small>`;
+  $("rowMod").hidden=!(+c.mod>0);$("rMod").innerHTML=`−${bs((+c.mod||0)*rate)}<small>${usd(+c.mod||0)}</small>`;
+  const rt=$("rTotal");rt.innerHTML=`${bs(P)}<small>${usd(Pu)}</small>`;rt.style.color=P<0?"var(--neg)":"var(--pos)";
+  // mes
+  const g=c.games, M=P*g, Mu=Pu*g;
+  $("gOut").textContent=g;$("gRange").value=g;
+  const mu=$("mUsd");mu.textContent=usd0(Mu);mu.className="usd num "+(M<0?"neg":"pos");
+  $("mBs").textContent=bs(M);
+  document.querySelectorAll(".preset").forEach(b=>b.setAttribute("aria-pressed",+b.dataset.g===g?"true":"false"));
+  $("mNote").textContent=`${g} partida${g===1?"":"s"} de ${n} jugadores. Antes de publicidad, comisiones bancarias y datos móviles.`;
+  $("setSub").textContent=`Entrada ${bs(+c.entry||0)} · Kill ${bs(+c.kill||0)} · Premios ${usd(fixedUsd(),0)}`;
+  chart(be);
+  save();
+}
+
+/* ---------- Gráfico ---------- */
+function chart(be){
+  const svg=$("chart"),W=340,H=150,L=34,R=8,T=14,B=22;
+  const xs=[];for(let n=5;n<=100;n+=5)xs.push(n);
+  const vals=xs.map(n=>profitBs(n)/(+c.rate||1));
+  const cur=profitBs(c.n)/(+c.rate||1);
+  let mx=Math.max(0,...vals,cur),mn=Math.min(0,...vals,cur);if(mx===mn)mx=mn+1;
+  const pad=(mx-mn)*.08;mx+=pad;if(mn<0)mn-=pad;
+  const y=v=>T+(mx-v)/(mx-mn)*(H-T-B);
+  const x=n=>L+(n-2.5)/(100-2.5+2.5)*(W-L-R);
+  const bw=(W-L-R)/20*.68;
+  let s="";
+  // eje y: 0 y máximo
+  const niceMax=Math.max(0,...vals);
+  s+=`<line class="axis" x1="${L}" x2="${W-R}" y1="${H-B}" y2="${H-B}"/>`;
+  vals.forEach((v,i)=>{const n=xs[i];const y0=y(0),y1=y(v);const near=Math.abs(n-c.n)<2.5;
+    s+=`<rect class="${near?"b-cur":(v<0?"b-neg":"b-pos")}" x="${(x(n)-bw/2).toFixed(1)}" y="${Math.min(y0,y1).toFixed(1)}" width="${bw.toFixed(1)}" height="${Math.max(1,Math.abs(y1-y0)).toFixed(1)}" rx="1.5"/>`;});
+  s+=`<line class="zero" x1="${L}" x2="${W-R}" y1="${y(0).toFixed(1)}" y2="${y(0).toFixed(1)}"/>`;
+  s+=`<text x="${L-5}" y="${(y(0)+3).toFixed(1)}" text-anchor="end">$0</text>`;
+  if(niceMax>0)s+=`<text x="${L-5}" y="${(y(niceMax)+3).toFixed(1)}" text-anchor="end">${usd(niceMax,0)}</text>`;
+  const mnv=Math.min(...vals);if(mnv<0)s+=`<text x="${L-5}" y="${(y(mnv)+3).toFixed(1)}" text-anchor="end">${usd(mnv,0)}</text>`;
+  [10,25,50,75,100].forEach(n=>{s+=`<text x="${x(n).toFixed(1)}" y="${H-7}" text-anchor="middle">${n}</text>`;});
+  // marcador actual
+  const cx=x(c.n), cy=y(cur);
+  s+=`<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="4" fill="var(--accent)" stroke="var(--surface)" stroke-width="2"/>`;
+  const lx=Math.min(Math.max(cx,L+24),W-R-24);
+  s+=`<text class="marker-t" x="${lx.toFixed(1)}" y="${Math.max(10,cy-9).toFixed(1)}" text-anchor="middle">${c.n} → ${usd(cur,0)}</text>`;
+  svg.innerHTML=s;
+  $("chartNote").textContent=be===null?"Con estos montos ninguna cantidad de jugadores da ganancia.":`Las barras rojas son pérdida. A partir de ${be} jugadores cada partida deja ganancia.`;
+}
+
+/* ---------- Controles calculadora ---------- */
+const clampN=v=>Math.min(99,Math.max(2,Math.round(v)));
+function bump(d){c.n=clampN(c.n+d);render();}
+let holdT,holdI;
+function hold(btn,d){
+  const start=e=>{e.preventDefault();bump(d);holdT=setTimeout(()=>{holdI=setInterval(()=>bump(d),70);},420);};
+  const stop=()=>{clearTimeout(holdT);clearInterval(holdI);};
+  btn.addEventListener("pointerdown",start);["pointerup","pointerleave","pointercancel"].forEach(ev=>btn.addEventListener(ev,stop));
+  btn.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();bump(d);}});
+}
+hold($("minus"),-1);hold($("plus"),1);
+$("nRange").addEventListener("input",e=>{c.n=clampN(+e.target.value);render();});
+$("gRange").addEventListener("input",e=>{c.games=+e.target.value;render();});
+document.querySelectorAll(".preset").forEach(b=>b.addEventListener("click",()=>{c.games=+b.dataset.g;render();}));
+const MAP={sEntry:"entry",sKill:"kill",sP1:"p1",sP2:"p2",sP3:"p3",sBounty:"bounty",sMod:"mod",sRate:"rate"};
+function fillSettings(){Object.entries(MAP).forEach(([id,k])=>{$(id).value=c[k];});$("sDies").checked=!!c.dies;}
+Object.entries(MAP).forEach(([id,k])=>$(id).addEventListener("input",e=>{const v=parseFloat(e.target.value);c[k]=isFinite(v)?v:0;render();}));
+$("sDies").addEventListener("change",e=>{c.dies=e.target.checked;render();});
+$("resetCalc").addEventListener("click",()=>{Object.assign(c,DEF);fillSettings();render();toast("Valores iniciales restaurados");});
+if(st.open.settings)$("settings").open=true;
+$("settings").addEventListener("toggle",e=>{st.open.settings=e.target.open;save();});
+
+/* ---------- Plan ---------- */
+const PH=[
+ {id:"f0",code:"F0",title:"Validar antes de invertir",sub:"Semana 1",t:[
+  {id:"t01",w:"os",x:"Responder en el chat las preguntas de definición"},
+  {id:"t02",w:"os",x:"Enviar la solicitud de licencia de torneo a Activision (CoD Mobile)",d:"Exigen aprobación previa y mayores de 18"},
+  {id:"t03",w:"os",x:"Consultar con un abogado el tema de juegos de envite y azar"},
+  {id:"t04",w:"ma",x:"Probar sala privada BR: ¿se puede desactivar redespliegue y revivir?"},
+  {id:"t05",w:"ma",x:"Probar si el moderador ve la tabla final de kills y posiciones"},
+  {id:"t06",w:"ma",x:"Probar si el moderador sigue viendo la partida después de morir",d:"Si no, hará falta un segundo espectador"},
+  {id:"t07",w:"ma",x:"Medir cuánto dura una partida completa"},
+  {id:"t08",w:"am",x:"Hacer la lista de jugadores conocidos para la primera semana"}
  ]},
- {id:"formato",code:"SEC-02",title:"Formato del torneo",short:"Formato",intro:"Las reglas de la partida. Cada detalle aquí cambia cuántas kills se pagan.",qs:[
-  {id:"modo",q:"¿Solos, dúos o escuadras?",why:"En solo cada muerte es una kill de alguien. En escuadras aparecen el revivir con placa y los compañeros que se cubren, y eso cambia el cálculo.",t:"chips",opts:["Solo","Dúos","Escuadras","Rotar según el día"],key:true},
-  {id:"camara",q:"¿Primera o tercera persona?",why:"En CoD Mobile se fija antes de la partida. La tercera persona es la más jugada; la primera es más competitiva.",t:"chips",opts:["Tercera persona","Primera persona","Alternar"]},
-  {id:"horario",q:"¿Cuántos torneos al día, a qué hora y qué días?",why:"La hora decide quién puede jugar: estudiantes, trabajadores, gente con mala señal de noche.",t:"area",ph:"Ej: 1 torneo a las 9:00 pm de lunes a sábado",key:true},
-  {id:"cupo_min",q:"¿Cuál es el cupo mínimo para que el torneo se juegue y qué pasa si no se llena?",why:"<b>Pregunta crítica.</b> Con pocos inscritos los premios fijos en dólares dan pérdida. Hay que decidir: cancelar y devolver, posponer o reducir premios.",t:"area",key:true},
-  {id:"cupo_max",q:"¿Cupo máximo por sala?",why:"La sala admite hasta 100. Más jugadores = más ingreso, pero también más pagos que verificar y procesar esa noche.",t:"text",ph:"Ej: 60"},
-  {id:"redespliegue",q:"¿Van a permitir que un jugador vuelva a la partida (recall/redespliegue o revivir)?",why:"<b>Muy importante para la caja.</b> Si alguien puede morir dos veces, genera dos kills pagadas con una sola inscripción. Hay que confirmar qué permite configurar la sala privada.",t:"chips",opts:["Desactivarlo","Permitirlo","No sé, hay que probar"],key:true},
-  {id:"mapa",q:"¿Qué mapa y ajustes de sala usarán? ¿Hay clases, armas o vehículos prohibidos?",why:"Reglas claras evitan reclamos. Algunas clases dan ventajas que la comunidad puede considerar injustas.",t:"area"},
-  {id:"desempate",q:"¿Cómo se define el 1.º, 2.º y 3.º lugar y cómo desempatan?",why:"¿Por supervivencia, por kills o combinado? Lo que diga la tabla final del juego debe coincidir con tu reglamento.",t:"area"}
+ {id:"f1",code:"F1",title:"Fundaciones",sub:"Semanas 2–3",t:[
+  {id:"t11",w:"ma",x:"Definir nombre de la marca (sin usar “Call of Duty”)"},
+  {id:"t12",w:"ma",x:"Diseñar logo e identidad visual"},
+  {id:"t13",w:"am",x:"Escribir el reglamento",d:"Cupo mínimo, desempates, desconexiones, trampas, edad, moderador fuera del top 3"},
+  {id:"t14",w:"os",x:"Decidir moneda de entrada y premios (Bs fijos o atados al BCV)"},
+  {id:"t15",w:"os",x:"Abrir cuenta bancaria separada solo para los torneos"},
+  {id:"t16",w:"os",x:"Averiguar costos y tiempos de una firma personal"},
+  {id:"t17",w:"os",x:"Elegir métodos de cobro y pago (máximo 2 al inicio)"},
+  {id:"t18",w:"os",x:"Crear la hoja de control de inscritos, kills y pagos"},
+  {id:"t19",w:"os",x:"Separar el fondo de reserva para premios de las primeras noches"},
+  {id:"t20",w:"ma",x:"Elegir plataforma y crear el grupo de la comunidad"},
+  {id:"t21",w:"ma",x:"Definir moderador suplente y entrenarlo"}
  ]},
- {id:"economia",code:"SEC-03",title:"Economía y premios",short:"Economía",intro:"Cómo se cobra, cómo se paga y cómo se protegen de la inflación.",qs:[
-  {id:"moneda",q:"¿La entrada y el pago por kill serán fijos en Bs o atados al dólar BCV del día?",why:"Los premios del top 3 están en dólares y la entrada en bolívares. Si el bolívar se devalúa, tu margen se encoge cada semana sin que te des cuenta.",t:"chips",opts:["Fijos en Bs","Atados a USD BCV","Fijos en USD"],key:true},
-  {id:"pago_premios",q:"¿En qué moneda y por qué medio pagan los premios del top 3 y del moderador?",why:"Pagar en USDT o en Bs a tasa BCV tiene costos y tiempos distintos.",t:"text",ph:"Ej: Bs por pago móvil a tasa BCV del día"},
-  {id:"kills_validas",q:"¿Qué kills cuentan? ¿Hay tope de kills pagadas por jugador?",why:"Un jugador muy bueno puede llevarse muchas kills. Un tope protege la caja, pero puede espantar a los mejores.",t:"area"},
-  {id:"pozo_mod",q:"Si nadie elimina al moderador, ¿el bono de $10 se acumula para el siguiente torneo?",why:"Un pozo que crece es un gancho de marketing excelente (\"¡El bono va por $40!\").",t:"chips",opts:["Sí, se acumula","No, se pierde","Se acumula con tope"]},
-  {id:"paquetes",q:"¿Ofrecerán paquetes o descuentos? (ej: 5 entradas por el precio de 4)",why:"Cobrar por adelantado reduce pagos sueltos cada noche y fideliza.",t:"area"},
-  {id:"otros_ingresos",q:"¿Qué otros ingresos les interesan además de las inscripciones?",why:"Según las reglas de Activision, la inscripción debería cubrir costos; los patrocinios necesitan su aprobación. Hay que pensar dónde está la ganancia real.",t:"chips",multi:true,opts:["Patrocinios locales","Membresía VIP","Venta de CP/recargas","Publicidad en streams","Ninguno por ahora"],key:true}
+ {id:"f2",code:"F2",title:"Piloto cerrado",sub:"Semanas 4–5",t:[
+  {id:"t31",w:"am",x:"Hacer de 3 a 5 torneos con conocidos"},
+  {id:"t32",w:"ma",x:"Grabar la cacería del moderador en cada piloto"},
+  {id:"t33",w:"os",x:"Registrar resultados: inscritos, kills pagadas, ganancia, tiempo de pago"},
+  {id:"t34",w:"am",x:"Ajustar reglas y montos con los datos reales"}
  ]},
- {id:"moderador",code:"SEC-04",title:"El moderador cazado",short:"Moderador",intro:"Es la idea más original del negocio. También es el punto donde más fácil se puede hacer trampa.",qs:[
-  {id:"quien_mod",q:"¿Quién será el moderador? ¿Uno solo o varios para cubrir turnos?",why:"Si uno se enferma o se le va la luz, el torneo se cae. Conviene tener un suplente entrenado.",t:"area",key:true},
-  {id:"pago_mod",q:"¿Se le paga al moderador? ¿Cuánto o qué porcentaje?",why:"Si es un costo fijo por torneo, sube el cupo mínimo para no perder.",t:"text",ph:"Ej: $5 por torneo o 15 % del margen"},
-  {id:"verif",q:"¿Cómo van a demostrar los resultados a la comunidad?",why:"La confianza es todo en este negocio. Publicar captura de la tabla final, o grabación, evita acusaciones de fraude.",t:"chips",multi:true,opts:["Captura de la tabla final","Grabación completa","Stream en vivo","Tabla en el grupo"],key:true},
-  {id:"mod_muere",q:"Si el moderador muere temprano, ¿puede seguir viendo la partida y las estadísticas?",why:"<b>Hay que probarlo.</b> Si al morir pierde la vista de la partida, quizás necesiten un segundo moderador espectador para registrar resultados.",t:"chips",opts:["Ya lo probamos y sí","Ya lo probamos y no","Hay que probarlo"],key:true},
-  {id:"mod_top3",q:"Si el moderador sobrevive hasta el final, ¿cómo queda la tabla?",why:"El moderador no puede ganar premios, pero puede quedar en el top 3 del juego. El reglamento debe decir que se excluye y se corre la posición.",t:"area"},
-  {id:"mod_trampa",q:"¿Cómo evitan que amigos del moderador sepan dónde se esconde?",why:"Si alguien sospecha favoritismo, la comunidad se cae. Ej: moderador sin amigos en la sala, sin streaming en vivo durante la partida.",t:"area"},
-  {id:"mod_contenido",q:"¿El moderador grabará clips? ¿Tiene equipo para grabar sin que el juego se ponga lento?",why:"Grabar pantalla en un teléfono de gama media puede bajar los FPS y hacerlo presa fácil.",t:"area"}
+ {id:"f3",code:"F3",title:"Lanzamiento público",sub:"Semana 6 en adelante",t:[
+  {id:"t41",w:"ma",x:"Crear cuentas de Instagram y TikTok"},
+  {id:"t42",w:"ma",x:"Publicar de 3 a 5 clips por semana"},
+  {id:"t43",w:"ma",x:"Publicar la tabla final después de cada torneo"},
+  {id:"t44",w:"am",x:"Lanzar el programa de referidos"},
+  {id:"t45",w:"os",x:"Definir presupuesto de publicidad pagada"}
  ]},
- {id:"pagos",code:"SEC-05",title:"Cobros, pagos y banco",short:"Pagos",intro:"Con 50 jugadores son 50 cobros más 30 o 40 pagos por noche. Aquí está tu mayor riesgo operativo.",qs:[
-  {id:"metodos",q:"¿Qué métodos de pago van a aceptar?",why:"Cada método extra es otra cuenta que conciliar. Empezar con uno o dos simplifica todo.",t:"chips",multi:true,opts:["Pago móvil","Transferencia","Binance (USDT)","Efectivo","Zinli","Zelle"],key:true},
-  {id:"banco",q:"¿Qué cuentas tienen hoy y cuál usarían? ¿Ya tienen RIF personal o firma personal?",why:"Mezclar estos movimientos con tu cuenta personal o la de Lienzo es justo lo que puede generar un bloqueo.",t:"area",key:true},
-  {id:"firma",q:"¿Quieren registrar una firma personal y abrir una cuenta jurídica solo para esto?",why:"Te protege ante el banco y te deja facturar patrocinios. Cuesta tiempo y dinero; hay que saber si vale la pena desde el inicio o tras validar.",t:"chips",opts:["Sí, desde el inicio","Después de validar 1 mes","No sé, necesito costos"]},
-  {id:"validacion",q:"¿Cómo se valida cada pago y cuándo cierra la inscripción?",why:"Ej: captura + número de referencia + cierre 30 minutos antes. Sin hora de cierre, terminas verificando pagos con la partida empezada.",t:"area",key:true},
-  {id:"tiempo_pago",q:"¿En cuánto tiempo pagan los premios después de terminar?",why:"Pagar rápido es tu mejor publicidad. Pagar tarde una sola vez puede costarte la reputación.",t:"chips",opts:["Menos de 1 hora","Mismo día","Al día siguiente"]},
-  {id:"reembolsos",q:"¿Qué pasa si a alguien se le cae el internet, la luz o el juego?",why:"En Venezuela va a pasar casi cada noche. La regla tiene que estar escrita antes del primer torneo.",t:"area",key:true},
-  {id:"quien_paga",q:"¿Quién cobra, quién paga y quién revisa?",why:"Separar quien paga de quien verifica evita errores y malentendidos entre socios.",t:"area"}
- ]},
- {id:"legal",code:"SEC-06",title:"Legal, reglas y trampas",short:"Legal",intro:"Lo que puede cerrar el negocio de golpe si no se atiende.",qs:[
-  {id:"licencia",q:"¿Están dispuestos a solicitar la licencia de torneos de Activision para CoD Mobile?",why:"<b>Activision exige aprobación previa y licencia</b> para todo torneo de CoD. Sin ella, se exponen a que cierren la comunidad o baneen cuentas. Vale la pena al menos enviar la solicitud.",t:"chips",opts:["Sí, solicitarla","Primero informarnos más","Operar sin licencia y asumir el riesgo"],key:true},
-  {id:"modelo_premios",q:"Si la licencia exige que la inscripción no financie los premios, ¿cómo los financiarían?",why:"Opciones: patrocinadores aprobados, membresía, o que la entrada cubra solo costos. Conviene pensarlo antes de invertir en publicidad.",t:"area",key:true},
-  {id:"edad",q:"¿Cómo van a verificar que los jugadores sean mayores de 18?",why:"Es requisito de Activision y además en Venezuela recibir dinero de menores por algo con premios en efectivo es delicado.",t:"area",key:true},
-  {id:"juegos_azar",q:"¿Saben si en Venezuela esta actividad podría verse como juego de envite y azar?",why:"Un torneo de habilidad no es lo mismo que una apuesta, pero conviene consultarlo con un abogado antes de crecer.",t:"chips",opts:["Ya lo consulté","Quiero consultarlo","No lo había pensado"]},
-  {id:"trampas",q:"¿Cómo van a manejar hackers, equipos encubiertos en modo solo y cuentas dobles?",why:"Dos amigos que se ayudan en solo pueden dominar las kills. Hace falta regla y sanción: expulsión, sin reembolso.",t:"area"},
-  {id:"reglamento",q:"¿Quién redacta el reglamento y dónde se publicará?",why:"Un reglamento fijado en el grupo resuelve el 80 % de las discusiones.",t:"text"}
- ]},
- {id:"comunidad",code:"SEC-07",title:"Comunidad y plataforma",short:"Comunidad",intro:"Dónde vive la comunidad y cómo se inscribe la gente.",qs:[
-  {id:"plataforma",q:"¿Qué plataforma prefieren?",why:"WhatsApp es donde ya está la gente, pero los grupos tienen límite y poca organización. Discord permite canales, roles y bots, pero menos venezolanos lo usan. Telegram es un punto medio con buenos bots.",t:"chips",opts:["WhatsApp","Telegram","Discord","WhatsApp + Discord"],key:true},
-  {id:"base",q:"¿Cuántos jugadores de CoD Mobile conocen ya y podrían jugar la primera semana?",why:"Las primeras noches dependen de tu red. Si son menos de 20, hay que sembrar antes de abrir.",t:"text",ph:"Ej: unos 15 entre amigos y conocidos",key:true},
-  {id:"alcance",q:"¿Solo Barquisimeto/Lara o todo el país?",why:"Todo el país da más volumen; lo local permite eventos presenciales y patrocinadores de la ciudad.",t:"chips",opts:["Lara","Todo Venezuela","Venezuela y otros países"]},
-  {id:"inscripcion",q:"¿Cómo se inscribe un jugador?",why:"Un formulario o un bot reduce errores al copiar IDs y referencias de pago.",t:"chips",opts:["Mensaje directo","Formulario web","Bot de Telegram/Discord","No sé"]},
-  {id:"atencion",q:"¿Quién atiende mensajes y reclamos, y en qué horario?",why:"Una comunidad sin respuesta muere rápido.",t:"text"}
- ]},
- {id:"marca",code:"SEC-08",title:"Marca y contenido",short:"Marca",intro:"Lo que va a atraer a los jugadores a la primera partida.",qs:[
-  {id:"nombre",q:"¿Tienen nombre de marca? ¿Qué estilo quieren transmitir?",why:"No puede usar \"Call of Duty\" ni su logo: debe decir que es independiente y no está patrocinado por Activision.",t:"area",ph:"Ej: algo agresivo y competitivo, o divertido y de barrio",key:true},
-  {id:"redes",q:"¿Qué cuentas de redes tienen o van a crear?",why:"El contenido de cacería del moderador encaja muy bien en formato corto.",t:"chips",multi:true,opts:["Instagram","TikTok","YouTube Shorts","Kick/Twitch"]},
-  {id:"editor",q:"¿Quién graba y edita? ¿Con qué equipo?",why:"Publicar 3 a 5 clips por semana es lo mínimo para crecer de forma orgánica.",t:"area"},
-  {id:"stream",q:"¿Transmitirán en vivo los torneos?",why:"El en vivo da confianza (todos ven quién ganó), pero si es la vista del moderador, revela su posición.",t:"chips",opts:["Sí, con retraso","Sí, desde un espectador","Solo clips después","No por ahora"]},
-  {id:"ads",q:"¿Cuánto pueden invertir por mes en publicidad pagada? (USD)",why:"Define si arrancamos con anuncios o solo con contenido orgánico y referidos.",t:"text",ph:"Ej: $30 al mes"},
-  {id:"referidos",q:"¿Darían recompensas por invitar a otros jugadores?",why:"Ej: entrada gratis por cada 3 referidos que jueguen. Es el canal más barato al inicio.",t:"chips",opts:["Sí","No","Tal vez"]}
- ]},
- {id:"herramientas",code:"SEC-09",title:"Herramientas y control",short:"Control",intro:"Cómo llevar la cuenta de inscritos, kills y pagos sin perder la cabeza.",qs:[
-  {id:"control",q:"¿Con qué quieren llevar el control al inicio?",why:"Una hoja de cálculo bien hecha basta para el primer mes. Una app propia tiene sentido cuando el proceso ya esté probado.",t:"chips",opts:["Hoja de cálculo","App web propia","Bot de mensajería","Lo que recomiendes"],key:true},
-  {id:"datos",q:"¿Qué datos van a pedir a cada jugador?",why:"Mínimo: nombre, ID de CoD, teléfono, datos de pago móvil para premios y confirmación de mayoría de edad.",t:"area"},
-  {id:"reportes",q:"¿Qué quieren ver al final de cada torneo y de cada mes?",why:"Ej: ingreso, kills pagadas, premios, margen, jugadores nuevos y recurrentes.",t:"area"},
-  {id:"extra",q:"¿Algo más que quieras agregar o que te preocupe?",why:"Cualquier idea, miedo o duda que no haya salido arriba.",t:"area"}
+ {id:"f4",code:"F4",title:"Herramientas y escala",sub:"Cuando el piloto sea rentable",t:[
+  {id:"t51",w:"am",x:"Formulario o bot de inscripción"},
+  {id:"t52",w:"os",x:"App web de control de pagos y reportes"},
+  {id:"t53",w:"am",x:"Evaluar un segundo torneo diario u otros juegos"}
  ]}
 ];
-
-// ---------- Estado ----------
-let state={answers:{},sim:{}};
-try{const raw=localStorage.getItem(KEY);if(raw){const p=JSON.parse(raw);if(p&&typeof p==="object")state=Object.assign(state,p);}}catch(e){}
-function save(){try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}}
-
-const SIM_DEF={n:49,entry:3000,kill:2000,pct:80,top:22,bounty:10,mod:0,rate:876.80};
-const sim=Object.assign({},SIM_DEF,state.sim||{});
-
-const $=s=>document.querySelector(s);
-const fmtBs=v=>"Bs "+Math.round(v).toLocaleString("es-VE");
-const fmtUsd=v=>(v<0?"-$":"$")+Math.abs(v).toLocaleString("es-VE",{minimumFractionDigits:2,maximumFractionDigits:2});
-
-// ---------- Render ----------
-const host=$("#sections"), rail=$("#rail");
-SECTIONS.forEach((s,si)=>{
-  const a=document.createElement("a");a.href="#"+s.id;a.dataset.sec=s.id;
-  a.innerHTML=`<span class="rc">${s.code.slice(4)}</span><span class="rt">${s.short}</span><span class="rn" id="rn-${s.id}">${s.sim?"·":""}</span>`;
-  a.querySelector(".rt").insertAdjacentText("afterend","");
-  if(window.matchMedia("(max-width:900px)").matches){}
-  rail.appendChild(a);
-
-  const sec=document.createElement("section");sec.className="sec";sec.id=s.id;
-  sec.innerHTML=`<div class="sec-head"><span class="sec-code">${s.code}</span><h2>${s.title}</h2></div><p class="sec-intro">${s.intro}</p>`;
-  if(s.sim){sec.appendChild(buildSim());}
-  else{
-    const wrap=document.createElement("div");wrap.className="qs";
-    s.qs.forEach((q,qi)=>wrap.appendChild(buildQ(q,si,qi)));
-    sec.appendChild(wrap);
-  }
-  host.appendChild(sec);
-});
-// En móvil, mostrar etiqueta corta en lugar del código
-(function(){const mq=window.matchMedia("(max-width:900px)");function upd(){rail.querySelectorAll("a").forEach(a=>{const s=SECTIONS.find(x=>x.id===a.dataset.sec);a.querySelector(".rc").textContent=mq.matches?s.short:s.code.slice(4);});}
- try{mq.addEventListener("change",upd);}catch(e){} upd();})();
-
-const rb=document.createElement("button");rb.className="btn ghost";rb.type="button";rb.id="resetBtn";rb.textContent="Borrar respuestas";rail.appendChild(rb);
-
-// Cierre
-const outro=document.createElement("section");outro.className="sec";outro.id="final";
-outro.innerHTML=`<div class="outro"><div><h3>Listo para el plan de acción</h3><p>Copia todo y pégalo en el chat. Con eso armo la lista de tareas ordenada: qué hacer primero, qué puede esperar y qué hay que probar antes de cobrarle a nadie.</p></div><button class="btn primary" id="copyEnd" type="button">Copiar respuestas</button></div><textarea id="fallback" hidden readonly aria-label="Respuestas para copiar"></textarea>`;
-host.appendChild(outro);
-
-function buildQ(q,si,qi){
-  const el=document.createElement("article");el.className="q"+(q.key?" key":"");el.id="q-"+q.id;
-  const num=`${String(si).padStart(2,"0")}.${qi+1}`;
-  const isChip=q.t==="chips";
-  const head=isChip?`<span class="qlabel" id="lb-${q.id}">${q.q}${q.key?'<span class="flag">clave</span>':""}</span>`:`<label for="in-${q.id}">${q.q}${q.key?'<span class="flag">clave</span>':""}</label>`;
-  el.innerHTML=`<div class="qhead"><span class="qnum">${num}</span>${head}</div><p class="why">${q.why}</p><div class="ctrl"></div>`;
-  const ctrl=el.querySelector(".ctrl");
-  const cur=state.answers[q.id]||{};
-  if(isChip){
-    const g=document.createElement("div");g.className="chips";g.setAttribute("role","group");g.setAttribute("aria-labelledby","lb-"+q.id);
-    const sel=new Set(cur.sel||[]);
-    q.opts.forEach(o=>{
-      const b=document.createElement("button");b.type="button";b.className="chip";b.textContent=o;b.setAttribute("aria-pressed",sel.has(o)?"true":"false");
-      b.addEventListener("click",()=>{
-        const a=state.answers[q.id]=state.answers[q.id]||{};let s=new Set(a.sel||[]);
-        if(q.multi){s.has(o)?s.delete(o):s.add(o);}else{s=s.has(o)?new Set():new Set([o]);}
-        a.sel=[...s];g.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed",s.has(c.textContent)?"true":"false"));
-        changed(q.id);
-      });
-      g.appendChild(b);
-    });
-    ctrl.appendChild(g);
-    const n=document.createElement("textarea");n.className="note";n.id="in-"+q.id;n.placeholder="Comentario o detalle (opcional)";n.value=cur.note||"";n.rows=1;
-    n.setAttribute("aria-label","Comentario: "+q.q);
-    n.addEventListener("input",()=>{(state.answers[q.id]=state.answers[q.id]||{}).note=n.value;changed(q.id);});
-    ctrl.appendChild(n);
-  }else{
-    const f=document.createElement(q.t==="area"?"textarea":"input");if(q.t!=="area")f.type="text";
-    f.id="in-"+q.id;f.placeholder=q.ph||"Tu respuesta";f.value=cur.text||"";if(q.t==="area")f.rows=2;
-    f.addEventListener("input",()=>{(state.answers[q.id]=state.answers[q.id]||{}).text=f.value;changed(q.id);});
-    ctrl.appendChild(f);
-  }
-  return el;
-}
-
-function isAnswered(id){const a=state.answers[id];if(!a)return false;return !!((a.text&&a.text.trim())||(a.sel&&a.sel.length)||(a.note&&a.note.trim()));}
-let saveT;
-function changed(id){$("#q-"+id).classList.toggle("answered",isAnswered(id));clearTimeout(saveT);saveT=setTimeout(save,250);progress();}
-function progress(){
-  let tot=0,done=0;
-  SECTIONS.forEach(s=>{if(s.sim)return;let d=0;s.qs.forEach(q=>{tot++;if(isAnswered(q.id)){done++;d++;}});
-    const rn=$("#rn-"+s.id);rn.textContent=d+"/"+s.qs.length;rn.classList.toggle("done",d===s.qs.length);});
-  $("#progFill").style.width=(tot?done/tot*100:0)+"%";$("#progTxt").textContent=done+" / "+tot;
-}
-
-// ---------- Simulador ----------
-function buildSim(){
-  const d=document.createElement("div");d.className="sim";
-  const F=(id,label,step,full)=>`<div class="field${full?" full":""}"><label for="s-${id}">${label}</label><input type="number" id="s-${id}" inputmode="decimal" step="${step}" min="0" value="${sim[id]}"></div>`;
-  d.innerHTML=`<div class="sim-in">
-    ${F("n","Jugadores que pagan",1)}${F("rate","Tasa BCV (Bs/$)",0.01)}
-    ${F("entry","Entrada (Bs)",100)}${F("kill","Pago por kill (Bs)",100)}
-    ${F("top","Premios top 3 ($)",1)}${F("bounty","Bono moderador ($)",1)}
-    ${F("mod","Pago al moderador ($)",1,true)}
-    <div class="field full"><label for="s-pct">Muertes que son kills de un jugador</label>
-      <div class="range-row"><input type="range" id="s-pct" min="40" max="100" step="5" value="${sim.pct}"><output id="o-pct">${sim.pct}%</output></div></div>
-    <p class="sim-note field full">Se asume modo solo y sin redespliegue: como máximo, cada inscrito más el moderador muere una vez. El bono del moderador se cuenta como pagado.</p>
-  </div>
-  <div class="sim-out">
-    <div><div class="eyebrow">Margen por torneo</div>
-      <div class="big"><span class="v" id="r-margin">—</span><span class="u" id="r-margin-bs">—</span></div></div>
-    <div class="bar" role="img" id="r-bar" aria-label="Distribución del ingreso"><span class="b-k" id="b-k"></span><span class="b-p" id="b-p"></span><span class="b-m" id="b-m"></span></div>
-    <div class="legend">
-      <div><span><i style="background:color-mix(in srgb,var(--accent) 85%,var(--bg))"></i>Kills pagadas</span><b id="l-k">—</b></div>
-      <div><span><i style="background:color-mix(in srgb,var(--alert) 70%,var(--bg))"></i>Premios fijos</span><b id="l-p">—</b></div>
-      <div><span><i style="background:color-mix(in srgb,var(--ok) 75%,var(--bg))"></i>Te queda</span><b id="l-m">—</b></div>
-    </div>
-    <div class="stats">
-      <div><span>Ingreso bruto</span><b id="r-in">—</b></div>
-      <div><span>Kills estimadas</span><b id="r-kills">—</b></div>
-      <div><span>Equilibrio (esperado)</span><b id="r-be">—</b></div>
-      <div><span>Equilibrio (peor caso)</span><b id="r-be2">—</b></div>
-      <div><span>Margen peor caso</span><b id="r-worst">—</b></div>
-      <div><span>Margen por jugador</span><b id="r-per">—</b></div>
-    </div>
-  </div>`;
-  setTimeout(()=>{
-    ["n","rate","entry","kill","top","bounty","mod"].forEach(id=>{const i=$("#s-"+id);i.addEventListener("input",()=>{const v=parseFloat(i.value);sim[id]=isFinite(v)?v:0;calc();});});
-    const r=$("#s-pct");r.addEventListener("input",()=>{sim.pct=+r.value;$("#o-pct").textContent=r.value+"%";calc();});
-    calc();
+const WN={os:"Oswaldo",ma:"Marcos",am:"Ambos"};
+const host=$("phases");
+PH.forEach((p,i)=>{
+  const d=document.createElement("details");d.className="card phase";d.id="ph-"+p.id;
+  d.open=st.open[p.id]!==undefined?st.open[p.id]:i<2;
+  d.innerHTML=`<summary><span class="ph-code">${p.code}</span><span class="ph-title">${p.title}<small>${p.sub}</small></span><span class="ph-count num" id="cnt-${p.id}"></span></summary><div class="ph-bar"><span id="bar-${p.id}"></span></div><ul class="tasks"></ul>`;
+  const ul=d.querySelector("ul");
+  p.t.forEach(t=>{
+    const li=document.createElement("li");li.className="task";li.dataset.w=t.w;li.id="task-"+t.id;
+    li.innerHTML=`<input type="checkbox" id="cb-${t.id}" aria-labelledby="lb-${t.id}"><label class="t" id="lb-${t.id}" for="cb-${t.id}"><span></span>${t.d?`<small></small>`:""}<span class="owner ${t.w}">${t.w==="am"?'<span class="dot am"></span>':""}${WN[t.w]}</span></label>`;
+    li.querySelector(".t > span").textContent=t.x;if(t.d)li.querySelector("small").textContent=t.d;
+    const cb=li.querySelector("input");cb.checked=!!st.done[t.id];li.classList.toggle("done",cb.checked);
+    cb.addEventListener("change",()=>{if(cb.checked)st.done[t.id]=true;else delete st.done[t.id];li.classList.toggle("done",cb.checked);planRender();save();});
+    ul.appendChild(li);
   });
-  return d;
+  d.addEventListener("toggle",()=>{st.open[p.id]=d.open;save();});
+  host.appendChild(d);
+});
+function planRender(){
+  let tot=0,dn=0;
+  PH.forEach(p=>{let d=0;p.t.forEach(t=>{tot++;if(st.done[t.id]){dn++;d++;}
+      const li=$("task-"+t.id);const w=st.who;
+      li.hidden=!(w==="all"||(w==="pend"&&!st.done[t.id])||(w===t.w)||(t.w==="am"&&(w==="os"||w==="ma")));});
+    const ce=$("cnt-"+p.id);ce.textContent=d+"/"+p.t.length;ce.classList.toggle("done",d===p.t.length);
+    $("bar-"+p.id).style.width=(d/p.t.length*100)+"%";});
+  const pct=tot?Math.round(dn/tot*100):0;
+  $("ringFg").setAttribute("stroke-dashoffset",(169.6*(1-pct/100)).toFixed(1));$("ringTxt").textContent=pct+"%";
+  $("planSub").textContent=`${dn} de ${tot} tareas listas`;
+  document.querySelectorAll("#who button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.w===st.who?"true":"false"));
 }
-function simResult(){
-  const n=Math.max(0,Math.floor(sim.n)), rate=sim.rate||1;
-  const inc=n*sim.entry;
-  const deaths=n; // n-1 jugadores + moderador
-  const kills=Math.round(deaths*sim.pct/100);
-  const kPay=kills*sim.kill;
-  const fixedUsd=sim.top+sim.bounty+sim.mod, fixed=fixedUsd*rate;
-  const margin=inc-kPay-fixed;
-  const worst=inc-deaths*sim.kill-fixed;
-  const perExp=sim.entry-sim.kill*sim.pct/100, perWorst=sim.entry-sim.kill;
-  const be=perExp>0?Math.ceil(fixed/perExp):Infinity;
-  const be2=perWorst>0?Math.ceil(fixed/perWorst):Infinity;
-  return {n,rate,inc,kills,kPay,fixed,margin,worst,be,be2,perExp};
-}
-function calc(){
-  const r=simResult();
-  state.sim=Object.assign({},sim);clearTimeout(saveT);saveT=setTimeout(save,300);
-  const mv=$("#r-margin");mv.textContent=fmtUsd(r.margin/r.rate);mv.className="v "+(r.margin<0?"neg":"pos");
-  $("#r-margin-bs").textContent=fmtBs(r.margin);
-  const tot=Math.max(r.inc,r.kPay+r.fixed,1);
-  const m=Math.max(0,r.margin);
-  $("#b-k").style.width=(Math.min(r.kPay,tot)/tot*100)+"%";
-  $("#b-p").style.width=(Math.min(r.fixed,tot)/tot*100)+"%";
-  $("#b-m").style.width=(m/tot*100)+"%";
-  $("#r-bar").setAttribute("aria-label",`Kills ${fmtBs(r.kPay)}, premios ${fmtBs(r.fixed)}, margen ${fmtBs(r.margin)}`);
-  $("#l-k").textContent=fmtBs(r.kPay);$("#l-p").textContent=fmtBs(r.fixed);$("#l-m").textContent=fmtBs(r.margin);
-  $("#r-in").textContent=fmtBs(r.inc)+" · "+fmtUsd(r.inc/r.rate);
-  $("#r-kills").textContent=r.kills+" de "+r.n+" muertes";
-  $("#r-be").textContent=isFinite(r.be)?r.be+" jugadores":"nunca";
-  $("#r-be2").textContent=isFinite(r.be2)?r.be2+" jugadores":"nunca";
-  const w=$("#r-worst");w.textContent=fmtUsd(r.worst/r.rate);w.style.color=r.worst<0?"var(--alert)":"";
-  $("#r-per").textContent=fmtBs(r.perExp);
-}
+document.querySelectorAll("#who button").forEach(b=>b.addEventListener("click",()=>{st.who=b.dataset.w;planRender();save();}));
 
-// ---------- Copiar ----------
-function buildText(){
-  const L=["BRIEFING · TORNEOS CoD MOBILE — RESPUESTAS",""];
-  const r=simResult();
-  L.push("[SIMULADOR]",`Jugadores ${r.n} · Entrada Bs ${sim.entry} · Kill Bs ${sim.kill} · Kills ${sim.pct}% de muertes · Top3 $${sim.top} · Bono mod $${sim.bounty} · Pago mod $${sim.mod} · BCV ${sim.rate}`,
-    `Margen esperado ${fmtBs(r.margin)} (${fmtUsd(r.margin/r.rate)}) · Peor caso ${fmtBs(r.worst)} · Equilibrio ${isFinite(r.be)?r.be:"—"} jugadores (peor caso ${isFinite(r.be2)?r.be2:"—"})`,"");
-  SECTIONS.forEach((s,si)=>{if(s.sim)return;L.push(`[${s.code}] ${s.title.toUpperCase()}`);
-    s.qs.forEach((q,qi)=>{const a=state.answers[q.id]||{};let ans="";
-      if(q.t==="chips"){ans=(a.sel&&a.sel.length)?a.sel.join(", "):"";if(a.note&&a.note.trim())ans+=(ans?" — ":"")+a.note.trim();}
-      else ans=(a.text||"").trim();
-      L.push(`${si}.${qi+1} ${q.q}`,`   → ${ans||"(sin responder)"}`);});
-    L.push("");});
+function planText(){
+  const today=new Date().toLocaleDateString("es-VE");
+  const L=[`AVANCE TORNEOS CODM · ${today}`,""];
+  PH.forEach(p=>{const d=p.t.filter(t=>st.done[t.id]).length;L.push(`${p.code} ${p.title} (${d}/${p.t.length})`);
+    p.t.forEach(t=>L.push(`${st.done[t.id]?"✅":"⬜"} ${t.x} [${WN[t.w]}]`));L.push("");});
   return L.join("\n");
 }
-function toast(t){const e=$("#toast");e.textContent=t;e.classList.add("show");clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove("show"),2400);}
-function copyAll(){
-  const txt=buildText();const fb=$("#fallback");
-  const fallback=()=>{fb.hidden=false;fb.value=txt;fb.focus();fb.select();toast("Selecciona el texto de abajo y cópialo");$("#final").scrollIntoView({behavior:"smooth"});};
+function toast(t){const e=$("toast");e.textContent=t;e.classList.add("show");clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove("show"),2400);}
+$("copyPlan").addEventListener("click",()=>{
+  const txt=planText(),fb=$("fallback");
+  const fallback=()=>{fb.hidden=false;fb.value=txt;fb.focus();fb.select();toast("Selecciona el texto y cópialo");};
   try{navigator.clipboard.writeText(txt).then(()=>toast("Copiado. Pégalo en el chat."),fallback);}catch(e){fallback();}
-}
-$("#copyTop").addEventListener("click",copyAll);
-document.addEventListener("click",e=>{if(e.target&&e.target.id==="copyEnd")copyAll();});
-$("#jumpEnd").addEventListener("click",()=>$("#final").scrollIntoView({behavior:"smooth"}));
-
-// Borrar con confirmación en dos toques
-let armed=false,armT;
-rb.addEventListener("click",()=>{
-  if(!armed){armed=true;rb.textContent="Toca otra vez para borrar";rb.classList.add("danger");armT=setTimeout(()=>{armed=false;rb.textContent="Borrar respuestas";rb.classList.remove("danger");},3500);return;}
-  clearTimeout(armT);state={answers:{},sim:{}};save();
-  document.querySelectorAll(".q").forEach(q=>q.classList.remove("answered"));
-  document.querySelectorAll(".q textarea,.q input").forEach(i=>i.value="");
-  document.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed","false"));
-  armed=false;rb.textContent="Borrar respuestas";rb.classList.remove("danger");progress();toast("Respuestas borradas");
+});
+let armed=false,armT;const cl=$("clearPlan");
+cl.addEventListener("click",()=>{
+  if(!armed){armed=true;cl.textContent="Toca otra vez";cl.classList.add("armed");armT=setTimeout(()=>{armed=false;cl.textContent="Desmarcar todo";cl.classList.remove("armed");},3000);return;}
+  clearTimeout(armT);st.done={};document.querySelectorAll(".task input").forEach(i=>{i.checked=false;i.closest(".task").classList.remove("done");});
+  armed=false;cl.textContent="Desmarcar todo";cl.classList.remove("armed");planRender();save();toast("Tareas desmarcadas");
 });
 
-// Estado inicial
-SECTIONS.forEach(s=>s.qs.forEach(q=>{if(isAnswered(q.id))$("#q-"+q.id).classList.add("answered");}));
-progress();
+/* ---------- Pestañas ---------- */
+function show(v){
+  st.view=v;const calc=v==="calc";
+  $("calcView").hidden=!calc;$("planView").hidden=calc;
+  $("tabCalc").setAttribute("aria-selected",calc);$("tabPlan").setAttribute("aria-selected",!calc);
+  save();
+}
+$("tabCalc").addEventListener("click",()=>{show("calc");window.scrollTo({top:0});});
+$("tabPlan").addEventListener("click",()=>{show("plan");window.scrollTo({top:0});});
+if(location.hash==="#plan")st.view="plan";
 
-// Sección activa en el riel
-try{
-  const io=new IntersectionObserver(es=>{es.forEach(en=>{if(en.isIntersecting){rail.querySelectorAll("a").forEach(a=>a.classList.toggle("active",a.dataset.sec===en.target.id));}});},{rootMargin:"-40% 0px -55% 0px"});
-  document.querySelectorAll("section.sec").forEach(s=>io.observe(s));
-}catch(e){}
+fillSettings();render();planRender();show(st.view);
 })();
 </script>
 

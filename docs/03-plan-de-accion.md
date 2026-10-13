@@ -1,52 +1,53 @@
 # Plan de acción
 
-*Versión preliminar · 13/10/2026 · Se ajustará con las respuestas del briefing*
+*Versión preliminar · 13/10/2026 · Se ajustará con las respuestas de definición*
 
-Marca `[x]` cuando una tarea esté lista. El orden importa: no gastar en publicidad hasta cerrar las fases 0 y 1.
+**Responsables:** 🔵 Oswaldo (cuentas, pagos, banco, legal) · 🟣 Marcos (operativo, redes, diseño, moderación) · ⚪ Ambos
 
-## Fase 0 · Validar antes de invertir (semana 1)
+Esta lista es la misma que aparece en la pestaña **Plan** de la página. No gastar en publicidad hasta cerrar las fases 0 y 1.
 
-- [ ] Responder el briefing completo (cada socio) y pasarlo a Claude.
-- [ ] Enviar la solicitud de licencia de torneo de Activision para CoD Mobile.
-- [ ] Consultar con un abogado si aplica la normativa de juegos de envite y azar.
-- [ ] Prueba técnica de sala privada Battle Royale con amigos:
-  - [ ] ¿Se puede desactivar el redespliegue y el revivir?
-  - [ ] ¿El moderador ve la tabla de kills y posiciones al final?
-  - [ ] ¿Si el moderador muere, sigue viendo la partida?
-  - [ ] ¿Se puede entrar como espectador?
-  - [ ] ¿Cuánto dura una partida completa?
-- [ ] Contar cuántos jugadores conocidos jugarían la primera semana.
+## F0 · Validar antes de invertir (semana 1)
 
-## Fase 1 · Fundaciones (semanas 2–3)
+- [ ] 🔵 Responder en el chat las preguntas de definición
+- [ ] 🔵 Enviar la solicitud de licencia de torneo a Activision (CoD Mobile)
+- [ ] 🔵 Consultar con un abogado el tema de juegos de envite y azar
+- [ ] 🟣 Probar sala privada BR: ¿se puede desactivar redespliegue y revivir?
+- [ ] 🟣 Probar si el moderador ve la tabla final de kills y posiciones
+- [ ] 🟣 Probar si el moderador sigue viendo la partida después de morir
+- [ ] 🟣 Medir cuánto dura una partida completa
+- [ ] ⚪ Hacer la lista de jugadores conocidos para la primera semana
 
-- [ ] Definir nombre y marca propia (sin usar "Call of Duty").
-- [ ] Escribir el reglamento: formato, cupo mínimo, desempate, desconexiones, trampas, edad, exclusión del moderador del top 3.
-- [ ] Decidir moneda de entrada y premios (fija en Bs o atada al BCV).
-- [ ] Abrir cuenta bancaria separada solo para los torneos.
-- [ ] Evaluar registro de firma personal (costos y tiempos).
-- [ ] Elegir métodos de pago (máximo 2 al inicio).
-- [ ] Crear la hoja de control: inscritos, pagos, kills, premios, margen.
-- [ ] Elegir plataforma de comunidad y crear el grupo o servidor.
-- [ ] Definir moderador principal y suplente; entrenarlos.
-- [ ] Separar el fondo de reserva para premios de las primeras noches.
+## F1 · Fundaciones (semanas 2–3)
 
-## Fase 2 · Piloto cerrado (semanas 4–5)
+- [ ] 🟣 Definir nombre de la marca (sin usar "Call of Duty")
+- [ ] 🟣 Diseñar logo e identidad visual
+- [ ] ⚪ Escribir el reglamento (cupo mínimo, desempates, desconexiones, trampas, edad, moderador fuera del top 3)
+- [ ] 🔵 Decidir moneda de entrada y premios (Bs fijos o atados al BCV)
+- [ ] 🔵 Abrir cuenta bancaria separada solo para los torneos
+- [ ] 🔵 Averiguar costos y tiempos de una firma personal
+- [ ] 🔵 Elegir métodos de cobro y pago (máximo 2 al inicio)
+- [ ] 🔵 Crear la hoja de control de inscritos, kills y pagos
+- [ ] 🔵 Separar el fondo de reserva para premios de las primeras noches
+- [ ] 🟣 Elegir plataforma y crear el grupo de la comunidad
+- [ ] 🟣 Definir moderador suplente y entrenarlo
 
-- [ ] Hacer 3 a 5 torneos con conocidos.
-- [ ] Medir: inscritos, kills pagadas, tiempo de pagos, reclamos.
-- [ ] Grabar clips del moderador en todos los pilotos.
-- [ ] Ajustar reglas y montos con los datos reales.
+## F2 · Piloto cerrado (semanas 4–5)
 
-## Fase 3 · Lanzamiento público (semana 6 en adelante)
+- [ ] ⚪ Hacer de 3 a 5 torneos con conocidos
+- [ ] 🟣 Grabar la cacería del moderador en cada piloto
+- [ ] 🔵 Registrar resultados: inscritos, kills pagadas, ganancia, tiempo de pago
+- [ ] ⚪ Ajustar reglas y montos con los datos reales
 
-- [ ] Crear cuentas de Instagram y TikTok.
-- [ ] Publicar 3 a 5 clips por semana.
-- [ ] Lanzar programa de referidos.
-- [ ] Publicar resultados y captura de la tabla final de cada torneo.
-- [ ] Evaluar publicidad pagada cuando el piloto sea rentable.
+## F3 · Lanzamiento público (semana 6 en adelante)
 
-## Fase 4 · Herramientas y escala
+- [ ] 🟣 Crear cuentas de Instagram y TikTok
+- [ ] 🟣 Publicar de 3 a 5 clips por semana
+- [ ] 🟣 Publicar la tabla final después de cada torneo
+- [ ] ⚪ Lanzar el programa de referidos
+- [ ] 🔵 Definir presupuesto de publicidad pagada
 
-- [ ] Formulario o bot de inscripción.
-- [ ] App web de control (inscritos, kills, pagos, reportes).
-- [ ] Evaluar un segundo torneo diario u otros juegos.
+## F4 · Herramientas y escala (cuando el piloto sea rentable)
+
+- [ ] ⚪ Formulario o bot de inscripción
+- [ ] 🔵 App web de control de pagos y reportes
+- [ ] ⚪ Evaluar un segundo torneo diario u otros juegos

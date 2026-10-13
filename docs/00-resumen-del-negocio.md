@@ -42,9 +42,11 @@ Si entran 50 personas, juegan 49 y el número 50 es el moderador.
 
 | Persona | Rol | Pendiente definir |
 |---|---|---|
-| Oswaldo Farias | Socio – contabilidad, pagos, estructura legal | Horas por semana |
-| Socio | Por definir | Rol, aporte, horas |
-| Moderador(es) | Por definir | Quién, suplente, pago |
+| Oswaldo Farias | Socio · cuentas, pagos, banco, estructura legal, números | Horas por semana |
+| Marcos | Socio · operativo, redes, diseño, publicidad; moderador en algunas partidas | Horas por semana |
+| Moderador suplente | Por definir | Quién y pago |
+
+Todos ayudan en todo, pero cada uno es responsable de su área.
 
 ## Canales de crecimiento previstos
 
